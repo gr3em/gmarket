@@ -7,6 +7,15 @@
     <title>Stock Market Website - Sign In/Sign Up</title>
     <link rel="stylesheet" href="styles/main.css">
     <link rel="icon" href="data:,">
+    <script>
+        (function(){
+            var redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+            if (redirect && redirect != location.href) {
+                history.replaceState(null, null, redirect);
+            }
+        })();
+    </script>
 </head>
 <body>
     <header>

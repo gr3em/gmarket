@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact us for any inquiries about our stock market data and services.">
+    <title>Stock Market Website - Contact Us</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li class="auth-not-required"><a href="../index.html">Sign In/Sign Up</a></li>
+                <li><a href="home.html">Home</a></li>
+                <li class="auth-required"><a href="market.html">Market</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+                <li class="auth-required"><button id="logoutBtn">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Contact Us</h1>
+        <section id="contact-info">
+            <h2>Get in Touch</h2>
+            <p>Email: info@stockmarketwebsite.com</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>Address: 123 Wall Street, New York, NY 10005</p>
+        </section>
+        <form id="contact-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+        <div id="success-message" style="display: none;">Your message has been sent successfully!</div>
+    </main>
+    <footer>
+        <p>&copy; <span id="current-year"></span> Stock Market Website. All rights reserved.</p>
+        <nav>
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+        </nav>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
