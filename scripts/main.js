@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
-      authDomain: "gmarket.github.io",
+      authDomain: "gr3em.github.io",
       projectId: "stock-market-ce23e",
       storageBucket: "stock-market-ce23e.appspot.com",
       messagingSenderId: "996301529064",
