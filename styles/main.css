@@ -1,18 +1,19 @@
 /* Base styles */
 body {
-    font-family: Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f4f4f4;
+    background-color: #000000;
+    color: #FFFFFF;
 }
 
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: #000000;
+    border-bottom: 1px solid #7216f4;
     padding: 1rem;
 }
 
@@ -25,8 +26,14 @@ nav ul {
 }
 
 nav ul li a {
-    color: #fff;
+    color: #FFFFFF;
     text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #7216f4;
 }
 
 main {
@@ -34,14 +41,13 @@ main {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #000000;
 }
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
     margin-bottom: 1rem;
+    color: #7216f4;
 }
 
 p {
@@ -58,13 +64,16 @@ form {
 
 label {
     margin-bottom: 0.5rem;
+    color: #FFFFFF;
 }
 
 input, button, textarea {
     margin-bottom: 1rem;
     padding: 0.5rem;
-    border: 1px solid #ddd;
+    border: 1px solid #7216f4;
     border-radius: 4px;
+    background-color: #000000;
+    color: #FFFFFF;
 }
 
 textarea {
@@ -72,33 +81,39 @@ textarea {
 }
 
 button {
-    background-color: #333;
-    color: #fff;
+    background-color: #7216f4;
+    color: #FFFFFF;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #555;
+    background-color: #5a11c3;
 }
 
 /* Chart styles */
 .chart-container {
     width: 100%;
-    height: 400px;
-    margin-bottom: 1rem;
+    height: 500px;
+    margin-bottom: 2rem;
+    border: 1px solid #7216f4;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 /* Stock info styles */
 #stockInfo {
-    background-color: #f0f0f0;
+    background-color: #1a1a1a;
     padding: 1rem;
     border-radius: 4px;
     margin-bottom: 1rem;
+    border: 1px solid #7216f4;
 }
 
 #stockInfo h2 {
     margin-top: 0;
+    color: #7216f4;
 }
 
 /* Features section */
@@ -109,55 +124,65 @@ button:hover {
 
 #features li {
     margin-bottom: 0.5rem;
+    color: #FFFFFF;
 }
 
 /* Getting started section */
 #getting-started {
-    background-color: #e0e0e0;
+    background-color: #1a1a1a;
     padding: 1rem;
     border-radius: 4px;
+    border: 1px solid #7216f4;
 }
 
 /* Contact info section */
 #contact-info {
-    background-color: #e0e0e0;
+    background-color: #1a1a1a;
     padding: 1rem;
     border-radius: 4px;
     margin-bottom: 1rem;
+    border: 1px solid #7216f4;
 }
 
 /* Footer styles */
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #000000;
+    color: #FFFFFF;
     padding: 1rem;
     text-align: center;
+    border-top: 1px solid #7216f4;
 }
 
 footer nav a {
-    color: #fff;
+    color: #FFFFFF;
     text-decoration: none;
     margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+
+footer nav a:hover {
+    color: #7216f4;
 }
 
 /* OAuth buttons */
 .oauth-btn {
-    background-color: #4285F4;
-    color: white;
+    background-color: #7216f4;
+    color: #FFFFFF;
     border: none;
     padding: 10px 20px;
     margin: 5px 0;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .oauth-btn:hover {
-    background-color: #357AE8;
+    background-color: #5a11c3;
 }
 
 /* Toggle signup link */
 #toggle-signup {
-    color: #4285F4;
+    color: #7216f4;
     text-decoration: none;
     cursor: pointer;
 }
@@ -170,27 +195,28 @@ footer nav a {
 #loading {
     text-align: center;
     font-style: italic;
-    color: #666;
+    color: #7216f4;
 }
 
 /* Logout button */
 #logoutBtn {
-    background-color: #f44336;
-    color: white;
+    background-color: #7216f4;
+    color: #FFFFFF;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 #logoutBtn:hover {
-    background-color: #d32f2f;
+    background-color: #5a11c3;
 }
 
 /* Success message */
 #success-message {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #7216f4;
+    color: #FFFFFF;
     padding: 10px;
     border-radius: 4px;
     margin-top: 10px;
@@ -221,5 +247,52 @@ footer nav a {
     
     form {
         max-width: 100%;
+    }
+}
+
+/* Grid layout for stock information */
+#stockGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.stock-card {
+    background-color: #1a1a1a;
+    padding: 1rem;
+    border-radius: 4px;
+    border: 1px solid #7216f4;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stock-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(114, 22, 244, 0.3);
+}
+
+/* Icon styles */
+nav ul li a i, #logoutBtn i {
+    margin-right: 0.5rem;
+}
+
+/* Hover effects */
+nav ul li a, #logoutBtn, .oauth-btn, #toggle-signup {
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
+    transform: translateY(-2px);
+    text-shadow: 0 2px 4px rgba(114, 22, 244, 0.3);
+}
+
+/* Responsive design updates */
+@media (max-width: 768px) {
+    #stockGrid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        height: 300px;
     }
 }
