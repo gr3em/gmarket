@@ -7,7 +7,9 @@
     <title>Stock Market - Market</title>
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 </head>
 <body>
     <header>
@@ -27,12 +29,14 @@
             <div id="chart"></div>
             <div id="loading" style="display: none;">Loading...</div>
         </div>
-        <div id="stockInfo">
-            <h2 id="stockSymbol"></h2>
-            <p>Current Price: <span id="currentPrice"></span></p>
-            <p>Open: <span id="openPrice"></span></p>
-            <p>High: <span id="highPrice"></span></p>
-            <p>Low: <span id="lowPrice"></span></p>
+        <div id="stockGrid">
+            <div class="stock-card" id="stockInfo">
+                <h2 id="stockSymbol"></h2>
+                <p>Current Price: <span id="currentPrice"></span></p>
+                <p>Open: <span id="openPrice"></span></p>
+                <p>High: <span id="highPrice"></span></p>
+                <p>Low: <span id="lowPrice"></span></p>
+            </div>
         </div>
         <div>
             <label for="symbolInput">Stock Symbol:</label>
