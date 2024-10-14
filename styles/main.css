@@ -227,6 +227,10 @@ footer nav a:hover {
     transition: display 0.3s ease-in-out;
 }
 
+.auth-required {
+    display: none;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     nav ul {

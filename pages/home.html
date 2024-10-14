@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GMarket - Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="/stock-market-website/styles/main.css">
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> Sign In/Sign Up</a></li>
-                <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="market.html"><i class="fas fa-chart-line"></i> Market</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                <li><button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
+                <li class="auth-not-required"><a href="/index.html"><i class="fas fa-sign-in-alt"></i> Sign In/Sign Up</a></li>
+                <li class="auth-required"><a href="/pages/home.html"><i class="fas fa-home"></i> Home</a></li>
+                <li class="auth-required"><a href="/pages/market.html"><i class="fas fa-chart-line"></i> Market</a></li>
+                <li class="auth-required"><a href="/pages/contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li class="auth-required"><button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
             </ul>
         </nav>
     </header>
@@ -50,7 +50,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="../scripts/main.js"></script>
+    <script src="/stock-market-website/scripts/main.js"></script>
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>

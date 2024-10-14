@@ -226,15 +226,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auth state change handler
     auth.onAuthStateChanged((user) => {
-        const currentPath = window.location.pathname;
+        const authRequired = document.querySelectorAll('.auth-required');
+        const authNotRequired = document.querySelectorAll('.auth-not-required');
+        
         if (user) {
             console.log('User is signed in');
-            if (currentPath === '/' || currentPath === '/index.html') {
+            authRequired.forEach(el => el.style.display = 'block');
+            authNotRequired.forEach(el => el.style.display = 'none');
+            
+            // Redirect if on sign-in page
+            if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
                 window.location.href = '/pages/home.html';
             }
         } else {
             console.log('No user is signed in');
-            if (currentPath !== '/' && currentPath !== '/index.html') {
+            authRequired.forEach(el => el.style.display = 'none');
+            authNotRequired.forEach(el => el.style.display = 'block');
+            
+            // Redirect if on authenticated pages
+            const authenticatedPages = ['/pages/home.html', '/pages/market.html', '/pages/contact.html'];
+            if (authenticatedPages.includes(window.location.pathname)) {
                 window.location.href = '/index.html';
             }
         }

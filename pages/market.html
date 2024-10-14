@@ -5,40 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GMarket - Market</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="/stock-market-website/styles/main.css">
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <style>
+        .market-section {
+            margin-bottom: 30px;
+        }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .chart {
+            width: 300px;
+            height: 200px;
+        }
+        .chart-buttons {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> Sign In/Sign Up</a></li>
-                <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="market.html"><i class="fas fa-chart-line"></i> Market</a></li>
-                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
-                <li><button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
+                <li class="auth-not-required"><a href="/index.html"><i class="fas fa-sign-in-alt"></i> Sign In/Sign Up</a></li>
+                <li class="auth-required"><a href="/pages/home.html"><i class="fas fa-home"></i> Home</a></li>
+                <li class="auth-required"><a href="/pages/market.html"><i class="fas fa-chart-line"></i> Market</a></li>
+                <li class="auth-required"><a href="/pages/contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li class="auth-required"><button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
             </ul>
         </nav>
     </header>
     <main>
-        <h1>Market</h1>
-        <div class="chart-container">
-            <div id="chart"></div>
-            <div id="loading" style="display: none;">Loading...</div>
-        </div>
-        <div id="stockGrid">
-            <div class="stock-card" id="stockInfo">
-                <h2 id="stockSymbol"></h2>
-                <p>Current Price: <span id="currentPrice"></span></p>
-                <p>Open: <span id="openPrice"></span></p>
-                <p>High: <span id="highPrice"></span></p>
-                <p>Low: <span id="lowPrice"></span></p>
+        <h1>Markets</h1>
+
+        <section id="indices" class="market-section">
+            <h2>Indices</h2>
+            <div class="chart-container">
+                <div class="chart" id="index-sp500"></div>
+                <div class="chart" id="index-nasdaq"></div>
+                <div class="chart" id="index-djia"></div>
             </div>
-        </div>
-        <div>
-            <label for="symbolInput">Stock Symbol:</label>
-            <input id="symbolInput" type="text" placeholder="Enter stock symbol">
-            <button id="searchBtn">Search</button>
-        </div>
+        </section>
+
+        <section id="stocks" class="market-section">
+            <h2>Stocks</h2>
+            <div class="chart-container">
+                <div class="chart" id="stock-aapl"></div>
+                <div class="chart" id="stock-googl"></div>
+                <div class="chart" id="stock-msft"></div>
+            </div>
+        </section>
+
+        <section id="etfs" class="market-section">
+            <h2>ETFs</h2>
+            <div class="chart-container">
+                <div class="chart" id="etf-spy"></div>
+                <div class="chart" id="etf-qqq"></div>
+                <div class="chart" id="etf-voo"></div>
+            </div>
+        </section>
+
+        <section id="crypto" class="market-section">
+            <h2>Crypto</h2>
+            <div class="chart-container">
+                <div class="chart" id="crypto-btcusd"></div>
+                <div class="chart" id="crypto-ethusd"></div>
+                <div class="chart" id="crypto-xrpusd"></div>
+            </div>
+        </section>
+
+        <section id="forex" class="market-section">
+            <h2>Forex</h2>
+            <div class="chart-container">
+                <div class="chart" id="forex-eurusd"></div>
+                <div class="chart" id="forex-gbpusd"></div>
+                <div class="chart" id="forex-usdjpy"></div>
+            </div>
+        </section>
+
+        <section id="futures" class="market-section">
+            <h2>Futures</h2>
+            <div class="chart-container">
+                <div class="chart" id="futures-cl1"></div>
+                <div class="chart" id="futures-gc1"></div>
+                <div class="chart" id="futures-zc1"></div>
+            </div>
+        </section>
+
+        <section id="bonds" class="market-section">
+            <h2>Bonds</h2>
+            <div class="chart-container">
+                <div class="chart" id="bond-us10y"></div>
+                <div class="chart" id="bond-de10y"></div>
+                <div class="chart" id="bond-gb10y"></div>
+            </div>
+        </section>
     </main>
     <footer>
         <p>&copy; <span id="current-year"></span> GMarket. All rights reserved.</p>
@@ -47,9 +110,79 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-    <script src="../scripts/main.js"></script>
+    <script src="/stock-market-website/scripts/main.js"></script>
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+    <script>
+        function createChart(container, symbol, type = 'line') {
+            const chartContainer = document.getElementById(container);
+            const widget = new TradingView.widget({
+                "width": 300,
+                "height": 200,
+                "symbol": symbol,
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": type,
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "hide_top_toolbar": true,
+                "hide_legend": true,
+                "save_image": false,
+                "container_id": container
+            });
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.className = 'chart-buttons';
+            
+            const lineButton = document.createElement('button');
+            lineButton.textContent = 'Line';
+            lineButton.onclick = () => widget.chart().setChartType(1);
+
+            const candleButton = document.createElement('button');
+            candleButton.textContent = 'Candle';
+            candleButton.onclick = () => widget.chart().setChartType(3);
+
+            const bothButton = document.createElement('button');
+            bothButton.textContent = 'Both';
+            bothButton.onclick = () => {
+                widget.chart().setChartType(3);
+                widget.chart().createStudy('Moving Average', false, false, [10], null, {'plot.color': 'rgb(150, 95, 196)'});
+            };
+
+            buttonContainer.appendChild(lineButton);
+            buttonContainer.appendChild(candleButton);
+            buttonContainer.appendChild(bothButton);
+            chartContainer.parentNode.insertBefore(buttonContainer, chartContainer.nextSibling);
+        }
+
+        function initCharts() {
+            createChart("index-sp500", "FOREXCOM:SPXUSD");
+            createChart("index-nasdaq", "NASDAQ:IXIC");
+            createChart("index-djia", "DJ:DJI");
+            createChart("stock-aapl", "NASDAQ:AAPL");
+            createChart("stock-googl", "NASDAQ:GOOGL");
+            createChart("stock-msft", "NASDAQ:MSFT");
+            createChart("etf-spy", "AMEX:SPY");
+            createChart("etf-qqq", "NASDAQ:QQQ");
+            createChart("etf-voo", "AMEX:VOO");
+            createChart("crypto-btcusd", "BITSTAMP:BTCUSD");
+            createChart("crypto-ethusd", "BITSTAMP:ETHUSD");
+            createChart("crypto-xrpusd", "BITSTAMP:XRPUSD");
+            createChart("forex-eurusd", "FX:EURUSD");
+            createChart("forex-gbpusd", "FX:GBPUSD");
+            createChart("forex-usdjpy", "FX:USDJPY");
+            createChart("futures-cl1", "NYMEX:CL1!");
+            createChart("futures-gc1", "COMEX:GC1!");
+            createChart("futures-zc1", "CBOT:ZC1!");
+            createChart("bond-us10y", "FRED:DGS10");
+            createChart("bond-de10y", "FRED:IRLTLT01DEM156N");
+            createChart("bond-gb10y", "FRED:IRLTLT01GBM156N");
+        }
+
+        document.addEventListener('DOMContentLoaded', initCharts);
     </script>
 </body>
 </html>
