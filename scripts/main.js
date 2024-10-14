@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Firebase configuration
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
-      authDomain: "gr3em.github.io",
+      authDomain: "stock-market-ce23e.firebaseapp.com",
       projectId: "stock-market-ce23e",
       storageBucket: "stock-market-ce23e.appspot.com",
       messagingSenderId: "996301529064",
@@ -168,8 +168,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Stock data fetching
     async function fetchStockData(symbol) {
+        const API_KEY = 'YOUR_API_KEY'; // Store this securely, not directly in the code
         try {
-            const response = await fetch(`/api/stock/${symbol}`);
+            const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -242,4 +243,13 @@ document.addEventListener('DOMContentLoaded', () => {
             chart.applyOptions({ width: chart.clientWidth, height: chart.clientHeight });
         }
     });
+
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function fetchWithDelay(symbol) {
+        await delay(1000); // 1 second delay
+        return fetchStockData(symbol);
+    }
 });

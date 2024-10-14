@@ -3,31 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMarket - [Page Name]</title>
+    <title>GMarket - Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/gmarket/styles/main.css">
+    <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="/gmarket/index.html"><i class="fas fa-sign-in-alt"></i> Sign In/Sign Up</a></li>
-                <li><a href="/gmarket/pages/home.html"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="/gmarket/pages/market.html"><i class="fas fa-chart-line"></i> Market</a></li>
-                <li><a href="/gmarket/pages/contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                <li><a href="../index.html"><i class="fas fa-sign-in-alt"></i> Sign In/Sign Up</a></li>
+                <li><a href="home.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="market.html"><i class="fas fa-chart-line"></i> Market</a></li>
+                <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a></li>
                 <li><button id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button></li>
             </ul>
         </nav>
     </header>
     <main>
-        <!-- Your existing content for each specific page -->
+        <h1>Welcome to GMarket</h1>
+        <p>Your one-stop platform for stock market information and analysis.</p>
+        
+        <section id="features">
+            <h2>Our Features</h2>
+            <ul>
+                <li>Real-time stock quotes</li>
+                <li>Interactive charts</li>
+                <li>Market news and updates</li>
+                <li>Portfolio tracking</li>
+            </ul>
+        </section>
+        
+        <section id="getting-started">
+            <h2>Getting Started</h2>
+            <p>To get started with GMarket:</p>
+            <ol>
+                <li>Create an account or sign in</li>
+                <li>Explore the market page for stock information</li>
+                <li>Set up your portfolio</li>
+                <li>Stay updated with our latest market insights</li>
+            </ol>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2023 GMarket. All rights reserved.</p>
+        <p>&copy; <span id="current-year"></span> GMarket. All rights reserved.</p>
     </footer>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script src="/gmarket/scripts/main.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>

@@ -2,12 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Redirecting...</title>
+  <title>Page Not Found</title>
   <script>
+    // Store the URL the user was trying to access when receiving the 404.
     sessionStorage.redirect = location.href;
   </script>
-  <meta http-equiv="refresh" content="0;URL='/'">
+  <!-- Immediately redirect to the base URL so we can use the SPA routing. -->
+  <meta http-equiv="refresh" content="0;URL='/gmarket/'">
 </head>
 <body>
+  <h1>Page Not Found</h1>
+  <p>Redirecting to homepage...</p>
 </body>
 </html>
