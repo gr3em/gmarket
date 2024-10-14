@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.signInWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     console.log("User signed in:", userCredential.user);
-                    window.location.href = 'pages/home.html';
+                    window.location.href = '/stock-market-website/pages/home.html';
                 })
                 .catch((error) => {
                     console.error("Error signing in:", error);
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.createUserWithEmailAndPassword(email, password)
                 .then((userCredential) => {
                     console.log("User signed up:", userCredential.user);
-                    window.location.href = 'pages/home.html';
+                    window.location.href = '/stock-market-website/pages/home.html';
                 })
                 .catch((error) => {
                     console.error("Error signing up:", error);
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
             auth.signInWithPopup(authProvider)
                 .then((result) => {
                     console.log(`${provider} sign in successful:`, result.user);
-                    window.location.href = 'pages/home.html';
+                    window.location.href = '/stock-market-website/pages/home.html';
                 })
                 .catch((error) => {
                     console.error(`${provider} sign in error:`, error);
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutBtn.addEventListener('click', () => {
             auth.signOut().then(() => {
                 console.log('User signed out');
-                window.location.href = '../index.html'; // Redirect to login page
+                window.location.href = '/stock-market-website/index.html'; // Redirect to login page
             }).catch((error) => {
                 console.error('Error signing out:', error);
             });
@@ -237,8 +237,10 @@ document.addEventListener('DOMContentLoaded', () => {
             authRequired.forEach(el => el.style.display = 'none');
             authNotRequired.forEach(el => el.style.display = 'block');
             const currentPath = window.location.pathname;
-            if (currentPath !== '/index.html' && currentPath !== '/' && currentPath !== '/pages/home.html') {
-                window.location.href = '/index.html';
+            if (!currentPath.includes('/stock-market-website/index.html') && 
+                !currentPath.endsWith('/stock-market-website/') && 
+                !currentPath.includes('/stock-market-website/pages/home.html')) {
+                window.location.href = '/stock-market-website/index.html';
             }
         }
     }
