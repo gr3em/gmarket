@@ -1,20 +1,23 @@
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCNrtV3TsMljkJHtst2aX87IeZOcQyNQ9A",
+  authDomain: "stock-market-ce23e.firebaseapp.com",
+  projectId: "stock-market-ce23e",
+  storageBucket: "stock-market-ce23e.appspot.com",
+  messagingSenderId: "996301529064",
+  appId: "1:996301529064:web:e2409079602e8733714e5d",
+  measurementId: "G-QMLTZ4S849"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+// Alpha Vantage API key
+const ALPHA_VANTAGE_API_KEY = 'KJLA4R0M7HP4KERR';
+
 document.addEventListener('DOMContentLoaded', () => {
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "stock-market-ce23e.firebaseapp.com",
-      projectId: "stock-market-ce23e",
-      storageBucket: "stock-market-ce23e.appspot.com",
-      messagingSenderId: "996301529064",
-      appId: "1:996301529064:web:e2409079602e8733714e5d",
-      measurementId: "G-QMLTZ4S849"
-    };
-
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-
     // Contact form submission
     const contactForm = document.getElementById('contact-form');
     const successMessage = document.getElementById('success-message');
@@ -110,48 +113,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     authProvider = new firebase.auth.GoogleAuthProvider();
                     break;
                 case 'yahoo':
-                    // You'll need to set up Yahoo auth in Firebase console
-                    console.log('Yahoo auth not implemented');
-                    return;
+                    authProvider = new firebase.auth.OAuthProvider('yahoo.com');
+                    break;
                 case 'microsoft':
-                    // You'll need to set up Microsoft auth in Firebase console
-                    console.log('Microsoft auth not implemented');
-                    return;
+                    authProvider = new firebase.auth.OAuthProvider('microsoft.com');
+                    break;
                 default:
-                    console.log('Unknown provider');
+                    console.error('Unknown provider:', provider);
                     return;
             }
             auth.signInWithPopup(authProvider)
                 .then((result) => {
-                    console.log(`Signed in with ${provider}`);
+                    console.log(`${provider} sign in successful:`, result.user);
                     window.location.href = 'pages/home.html';
-                }).catch((error) => {
-                    console.error(`Error signing in with ${provider}:`, error);
+                })
+                .catch((error) => {
+                    console.error(`${provider} sign in error:`, error);
                     alert(`Error signing in with ${provider}: ${error.message}`);
                 });
         });
     });
-
-    // User state change listener
-    function handleAuthStateChange(user) {
-        const authRequired = document.querySelectorAll('.auth-required');
-        const authNotRequired = document.querySelectorAll('.auth-not-required');
-        if (user) {
-            console.log('User is signed in');
-            authRequired.forEach(el => el.style.display = 'block');
-            authNotRequired.forEach(el => el.style.display = 'none');
-        } else {
-            console.log('No user is signed in');
-            authRequired.forEach(el => el.style.display = 'none');
-            authNotRequired.forEach(el => el.style.display = 'block');
-            const currentPath = window.location.pathname;
-            if (currentPath !== '/index.html' && currentPath !== '/' && currentPath !== '/pages/home.html') {
-                window.location.href = '/index.html';
-            }
-        }
-    }
-
-    auth.onAuthStateChanged(handleAuthStateChange);
 
     // Logout functionality
     const logoutBtn = document.getElementById('logoutBtn');
@@ -159,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutBtn.addEventListener('click', () => {
             auth.signOut().then(() => {
                 console.log('User signed out');
-                window.location.href = '/index.html'; // Redirect to login page
+                window.location.href = '../index.html'; // Redirect to login page
             }).catch((error) => {
                 console.error('Error signing out:', error);
             });
@@ -168,9 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Stock data fetching
     async function fetchStockData(symbol) {
-        const API_KEY = 'YOUR_API_KEY'; // Store this securely, not directly in the code
         try {
-            const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${API_KEY}`);
+            const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -244,12 +224,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    function delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+    // Auth state change handler
+    function handleAuthStateChange(user) {
+        const authRequired = document.querySelectorAll('.auth-required');
+        const authNotRequired = document.querySelectorAll('.auth-not-required');
+        if (user) {
+            console.log('User is signed in');
+            authRequired.forEach(el => el.style.display = 'block');
+            authNotRequired.forEach(el => el.style.display = 'none');
+        } else {
+            console.log('No user is signed in');
+            authRequired.forEach(el => el.style.display = 'none');
+            authNotRequired.forEach(el => el.style.display = 'block');
+            const currentPath = window.location.pathname;
+            if (currentPath !== '/index.html' && currentPath !== '/' && currentPath !== '/pages/home.html') {
+                window.location.href = '/index.html';
+            }
+        }
     }
 
-    async function fetchWithDelay(symbol) {
-        await delay(1000); // 1 second delay
-        return fetchStockData(symbol);
-    }
+    auth.onAuthStateChanged(handleAuthStateChange);
 });
