@@ -225,25 +225,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Auth state change handler
-    function handleAuthStateChange(user) {
-        const authRequired = document.querySelectorAll('.auth-required');
-        const authNotRequired = document.querySelectorAll('.auth-not-required');
+    auth.onAuthStateChanged((user) => {
         if (user) {
             console.log('User is signed in');
-            authRequired.forEach(el => el.style.display = 'block');
-            authNotRequired.forEach(el => el.style.display = 'none');
+            const currentPath = window.location.pathname;
+            if (currentPath.endsWith('/index.html') || currentPath.endsWith('/stock-market-website/')) {
+                window.location.href = '/stock-market-website/pages/home.html';
+            }
         } else {
             console.log('No user is signed in');
-            authRequired.forEach(el => el.style.display = 'none');
-            authNotRequired.forEach(el => el.style.display = 'block');
             const currentPath = window.location.pathname;
-            if (!currentPath.includes('/stock-market-website/index.html') && 
-                !currentPath.endsWith('/stock-market-website/') && 
-                !currentPath.includes('/stock-market-website/pages/home.html')) {
+            if (!currentPath.endsWith('/index.html') && !currentPath.endsWith('/stock-market-website/')) {
                 window.location.href = '/stock-market-website/index.html';
             }
         }
-    }
-
-    auth.onAuthStateChanged(handleAuthStateChange);
+    });
 });
