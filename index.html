@@ -35,9 +35,7 @@
                 <input type="password" id="confirm-password" placeholder="Confirm Password" required>
                 <button type="submit">Sign Up</button>
             </form>
-            <p>
-                <a href="#" id="toggle-signup">Don't have an account? Sign up</a>
-            </p>
+            <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
             <div>
                 <button class="oauth-btn" data-provider="gmail">Sign in with Gmail</button>
                 <button class="oauth-btn" data-provider="yahoo">Sign in with Yahoo</button>
@@ -62,7 +60,7 @@
         };
         firebase.initializeApp(firebaseConfig);
     </script>
-    <script src="/scripts/main.js"></script>
+    <script src="scripts/main.js"></script>
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>

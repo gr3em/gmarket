@@ -239,3 +239,25 @@ if (signinLink) {
         document.querySelector('.login-form').style.display = 'block';
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const gmailSignIn = document.querySelector('.oauth-btn[data-provider="gmail"]');
+  if (gmailSignIn) {
+    gmailSignIn.addEventListener('click', function(e) {
+      e.preventDefault();
+      console.log('Gmail sign-in clicked');
+      // Add your Gmail sign-in logic here
+    });
+  }
+
+  const navLinks = document.querySelectorAll('nav a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      console.log('Nav link clicked:', this.textContent);
+      // Add your navigation logic here
+    });
+  });
+});
+
+console.log('main.js loaded');
