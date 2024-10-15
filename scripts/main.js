@@ -226,26 +226,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auth state change handler
     auth.onAuthStateChanged((user) => {
+        console.log('Current path:', window.location.pathname);
+        console.log('User authenticated:', !!user);
         const authRequired = document.querySelectorAll('.auth-required');
         const authNotRequired = document.querySelectorAll('.auth-not-required');
-        
+        const currentPath = window.location.pathname;
+
         if (user) {
             console.log('User is signed in');
-            authRequired.forEach(el => el.style.display = 'block');
+            authRequired.forEach(el => el.style.display = 'inline-block');
             authNotRequired.forEach(el => el.style.display = 'none');
             
             // Redirect if on sign-in page
-            if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+            if (currentPath === '/' || currentPath.endsWith('/index.html')) {
                 window.location.href = '/pages/home.html';
             }
         } else {
             console.log('No user is signed in');
             authRequired.forEach(el => el.style.display = 'none');
-            authNotRequired.forEach(el => el.style.display = 'block');
+            authNotRequired.forEach(el => el.style.display = 'inline-block');
             
             // Redirect if on authenticated pages
             const authenticatedPages = ['/pages/home.html', '/pages/market.html', '/pages/contact.html'];
-            if (authenticatedPages.includes(window.location.pathname)) {
+            if (authenticatedPages.some(page => currentPath.endsWith(page))) {
                 window.location.href = '/index.html';
             }
         }
