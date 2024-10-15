@@ -215,3 +215,27 @@ document.querySelectorAll('nav a').forEach(link => {
         window.location.href = href;
     });
 });
+
+// Handle sign up link click
+const signupLink = document.getElementById('signupLink');
+if (signupLink) {
+    signupLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Hide login form
+        document.querySelector('.login-form').style.display = 'none';
+        // Show signup form
+        document.querySelector('.signup-form').style.display = 'block';
+    });
+}
+
+// Handle "Already have an account? Sign in" link click
+const signinLink = document.getElementById('signinLink');
+if (signinLink) {
+    signinLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        // Hide signup form
+        document.querySelector('.signup-form').style.display = 'none';
+        // Show login form
+        document.querySelector('.login-form').style.display = 'block';
+    });
+}

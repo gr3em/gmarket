@@ -300,3 +300,7 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
         height: 300px;
     }
 }
+
+.signup-form {
+    display: none;
+}
