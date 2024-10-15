@@ -137,14 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout functionality
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            auth.signOut().then(() => {
-                console.log('User signed out');
-                window.location.href = '/stock-market-website/index.html'; // Redirect to login page
-            }).catch((error) => {
-                console.error('Error signing out:', error);
-            });
-        });
+        logoutBtn.addEventListener('click', logout);
     }
 
     // Stock data fetching
@@ -226,31 +219,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auth state change handler
     auth.onAuthStateChanged((user) => {
+        console.log('Auth state changed. User:', user ? 'Logged in' : 'Not logged in');
         console.log('Current path:', window.location.pathname);
-        console.log('User authenticated:', !!user);
+
         const authRequired = document.querySelectorAll('.auth-required');
         const authNotRequired = document.querySelectorAll('.auth-not-required');
         const currentPath = window.location.pathname;
 
+        // Function to check if the current path is an authenticated page
+        const isAuthenticatedPage = (path) => {
+            const authenticatedPages = ['/pages/home.html', '/pages/market.html', '/pages/contact.html'];
+            return authenticatedPages.some(page => path.endsWith(page));
+        };
+
+        // Function to check if the current path is the index page
+        const isIndexPage = (path) => {
+            return path === '/' || path.endsWith('/index.html');
+        };
+
         if (user) {
-            console.log('User is signed in');
+            console.log('User is signed in. Showing auth-required elements.');
             authRequired.forEach(el => el.style.display = 'inline-block');
             authNotRequired.forEach(el => el.style.display = 'none');
             
-            // Redirect if on sign-in page
-            if (currentPath === '/' || currentPath.endsWith('/index.html')) {
+            if (isIndexPage(currentPath)) {
+                console.log('On index page while logged in. Redirecting to home.');
                 window.location.href = '/pages/home.html';
+            } else {
+                console.log('On authenticated page while logged in. No redirection needed.');
             }
         } else {
-            console.log('No user is signed in');
+            console.log('No user is signed in. Showing auth-not-required elements.');
             authRequired.forEach(el => el.style.display = 'none');
             authNotRequired.forEach(el => el.style.display = 'inline-block');
             
-            // Redirect if on authenticated pages
-            const authenticatedPages = ['/pages/home.html', '/pages/market.html', '/pages/contact.html'];
-            if (authenticatedPages.some(page => currentPath.endsWith(page))) {
+            if (isAuthenticatedPage(currentPath)) {
+                console.log('On authenticated page while not logged in. Redirecting to index.');
                 window.location.href = '/index.html';
+            } else {
+                console.log('On index page while not logged in. No redirection needed.');
             }
         }
     });
 });
+
+function logout() {
+    auth.signOut().then(() => {
+        console.log('User signed out');
+        window.location.href = '/index.html';
+    }).catch((error) => {
+        console.error('Error signing out:', error);
+    });
+}
+
+// Add this event listener after your DOM content is loaded
+document.getElementById('logoutBtn').addEventListener('click', logout);
