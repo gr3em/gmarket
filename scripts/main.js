@@ -15,32 +15,6 @@ const analytics = firebase.analytics();
 const auth = firebase.auth();
 const database = firebase.database();
 
-// Function to update UI based on auth state
-function updateUI(user) {
-  const authRequired = document.querySelectorAll('.auth-required');
-  const authNotRequired = document.querySelectorAll('.auth-not-required');
-  
-  if (user) {
-    authRequired.forEach(el => el.style.display = 'inline-block');
-    authNotRequired.forEach(el => el.style.display = 'none');
-  } else {
-    authRequired.forEach(el => el.style.display = 'none');
-    authNotRequired.forEach(el => el.style.display = 'inline-block');
-  }
-}
-
-// Listen for auth state changes
-auth.onAuthStateChanged(function(user) {
-  console.log(user ? 'User is signed in' : 'No user is signed in');
-  updateUI(user);
-  
-  if (user && (window.location.pathname === '/' || window.location.pathname.endsWith('index.html'))) {
-    window.location.href = '/pages/home.html';
-  } else if (!user && window.location.pathname.includes('/pages/')) {
-    window.location.href = '/index.html';
-  }
-});
-
 // Set up our register function
 function register() {
   // Get all our input fields
@@ -177,32 +151,11 @@ document.addEventListener('DOMContentLoaded', function() {
       auth.signInWithPopup(provider)
         .then((result) => {
           console.log('Google Sign-In Successful', result.user);
+          // You can redirect or update UI here
         }).catch((error) => {
           console.error('Google Sign-In Error', error.code, error.message);
           alert('Failed to sign in with Google. Error: ' + error.message);
         });
     });
   }
-  
-  // Logout functionality
-  const logoutBtn = document.getElementById('logoutBtn');
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', function() {
-      auth.signOut().then(() => {
-        console.log('User signed out');
-        window.location.href = '/index.html';
-      }).catch((error) => {
-        console.error('Sign out error', error);
-      });
-    });
-  }
 });
-
-// Prevent access to auth-required pages when not logged in
-if (window.location.pathname.includes('/pages/')) {
-  auth.onAuthStateChanged(function(user) {
-    if (!user) {
-      window.location.href = '/index.html';
-    }
-  });
-}
