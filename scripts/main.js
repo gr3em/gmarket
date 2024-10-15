@@ -28,7 +28,71 @@ function signInWithGoogle() {
         });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+    const authRequired = document.querySelectorAll('.auth-required');
+    const authNotRequired = document.querySelectorAll('.auth-not-required');
+
+    function updateNavigation(user) {
+        if (user) {
+            authRequired.forEach(el => el.style.display = 'inline-block');
+            authNotRequired.forEach(el => el.style.display = 'none');
+            if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+                window.location.href = '/pages/home.html';
+            }
+        } else {
+            authRequired.forEach(el => el.style.display = 'none');
+            authNotRequired.forEach(el => el.style.display = 'inline-block');
+            if (window.location.pathname.includes('/pages/')) {
+                window.location.href = '/index.html';
+            }
+        }
+    }
+
+    firebase.auth().onAuthStateChanged(function(user) {
+        console.log('Auth state changed:', user ? 'User logged in' : 'User logged out');
+        updateNavigation(user);
+    });
+
+    // Handle navigation clicks
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href');
+            const isAuthRequired = this.closest('.auth-required');
+            
+            if (isAuthRequired && !firebase.auth().currentUser) {
+                console.log('Auth required, user not logged in. Redirecting to sign in page.');
+                window.location.href = '/index.html';
+                return;
+            }
+            
+            window.location.href = href;
+        });
+    });
+
+    // Logout functionality
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            firebase.auth().signOut().then(() => {
+                console.log('User signed out');
+                window.location.href = '/index.html';
+            }).catch((error) => {
+                console.error('Sign out error', error);
+            });
+        });
+    }
+
+    // Force logout if on sign-in page and already logged in
+    if ((window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) && firebase.auth().currentUser) {
+        firebase.auth().signOut().then(() => {
+            console.log('User forcefully signed out on sign-in page');
+            window.location.reload();
+        }).catch((error) => {
+            console.error('Force sign out error', error);
+        });
+    }
+
     // Contact form submission
     const contactForm = document.getElementById('contact-form');
     const successMessage = document.getElementById('success-message');
@@ -144,12 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
         });
     });
-
-    // Logout functionality
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', logout);
-    }
 
     // Stock data fetching
     async function fetchStockData(symbol) {
