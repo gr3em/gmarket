@@ -17,6 +17,17 @@ const db = firebase.firestore();
 // Alpha Vantage API key
 const ALPHA_VANTAGE_API_KEY = 'KJLA4R0M7HP4KERR';
 
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+function signInWithGoogle() {
+    auth.signInWithPopup(googleProvider)
+        .then((result) => {
+            console.log('Google sign-in successful', result.user);
+        }).catch((error) => {
+            console.error('Google sign-in error', error);
+        });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Contact form submission
     const contactForm = document.getElementById('contact-form');
