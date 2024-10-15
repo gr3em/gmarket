@@ -11,335 +11,207 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+// Initialize variables
 const auth = firebase.auth();
-const db = firebase.firestore();
+const database = firebase.database();
 
-// Alpha Vantage API key
-const ALPHA_VANTAGE_API_KEY = 'KJLA4R0M7HP4KERR';
+// Set up our register function
+function register() {
+    // Get all our input fields
+    email = document.getElementById('email').value
+    password = document.getElementById('password').value
+    full_name = document.getElementById('full_name').value
+    favourite_song = document.getElementById('favourite_song').value
+    milk_before_cereal = document.getElementById('milk_before_cereal').value
 
-const googleProvider = new firebase.auth.GoogleAuthProvider();
+    // Validate input fields
+    if (validate_email(email) == false || validate_password(password) == false) {
+        alert('Email or Password is Outta Line!!')
+        return
+        // Don't continue running the code
+    }
+    if (validate_field(full_name) == false || validate_field(favourite_song) == false || validate_field(milk_before_cereal) == false) {
+        alert('One or More Extra Fields is Outta Line!!')
+        return
+    }
 
-function signInWithGoogle() {
-    auth.signInWithPopup(googleProvider)
-        .then((result) => {
-            console.log('Google sign-in successful', result.user);
-        }).catch((error) => {
-            console.error('Google sign-in error', error);
-        });
+    // Move on with Auth
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(function () {
+            // Declare user variable
+            var user = auth.currentUser
+
+            // Add this user to Firebase Database
+            var database_ref = database.ref()
+
+            // Create User data
+            var user_data = {
+                email: email,
+                full_name: full_name,
+                favourite_song: favourite_song,
+                milk_before_cereal: milk_before_cereal,
+                last_login: Date.now()
+            }
+
+            // Push to Firebase Database
+            database_ref.child('users/' + user.uid).set(user_data)
+
+            // DOne
+            alert('User Created!!')
+        })
+        .catch(function (error) {
+            // Firebase will use this to alert of its errors
+            var error_code = error.code
+            var error_message = error.message
+
+            alert(error_message)
+        })
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+// Set up our login function
+function login() {
+    // Get all our input fields
+    email = document.getElementById('email').value
+    password = document.getElementById('password').value
+
+    // Validate input fields
+    if (validate_email(email) == false || validate_password(password) == false) {
+        alert('Email or Password is Outta Line!!')
+        return
+        // Don't continue running the code
+    }
+
+    auth.signInWithEmailAndPassword(email, password)
+        .then(function () {
+            // Declare user variable
+            var user = auth.currentUser
+
+            // Add this user to Firebase Database
+            var database_ref = database.ref()
+
+            // Create User data
+            var user_data = {
+                last_login: Date.now()
+            }
+
+            // Push to Firebase Database
+            database_ref.child('users/' + user.uid).update(user_data)
+
+            // DOne
+            alert('User Logged In!!')
+
+        })
+        .catch(function (error) {
+            // Firebase will use this to alert of its errors
+            var error_code = error.code
+            var error_message = error.message
+
+            alert(error_message)
+        })
+}
+
+// Validate Functions
+function validate_email(email) {
+    expression = /^[^@]+@\w+(\.\w+)+\w$/
+    if (expression.test(email) == true) {
+        // Email is good
+        return true
+    } else {
+        // Email is not good
+        return false
+    }
+}
+
+function validate_password(password) {
+    // Firebase only accepts lengths greater than 6
+    if (password < 6) {
+        return false
+    } else {
+        return true
+    }
+}
+
+function validate_field(field) {
+    if (field == null) {
+        return false
+    }
+
+    if (field.length <= 0) {
+        return false
+    } else {
+        return true
+    }
+}
+
+// New authentication state listener
+auth.onAuthStateChanged(function(user) {
     const authRequired = document.querySelectorAll('.auth-required');
     const authNotRequired = document.querySelectorAll('.auth-not-required');
-
-    function updateNavigation(user) {
-        if (user) {
-            authRequired.forEach(el => el.style.display = 'inline-block');
-            authNotRequired.forEach(el => el.style.display = 'none');
-            if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
-                window.location.href = '/pages/home.html';
-            }
-        } else {
-            authRequired.forEach(el => el.style.display = 'none');
-            authNotRequired.forEach(el => el.style.display = 'inline-block');
-            if (window.location.pathname.includes('/pages/')) {
-                window.location.href = '/index.html';
-            }
+    
+    if (user) {
+        console.log('User is signed in');
+        authRequired.forEach(el => el.style.display = 'inline-block');
+        authNotRequired.forEach(el => el.style.display = 'none');
+        
+        if (window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) {
+            window.location.href = '/pages/home.html';
+        }
+    } else {
+        console.log('No user is signed in');
+        authRequired.forEach(el => el.style.display = 'none');
+        authNotRequired.forEach(el => el.style.display = 'inline-block');
+        
+        if (window.location.pathname.includes('/pages/')) {
+            window.location.href = '/index.html';
         }
     }
-
-    firebase.auth().onAuthStateChanged(function(user) {
-        console.log('Auth state changed:', user ? 'User logged in' : 'User logged out');
-        updateNavigation(user);
-    });
-
-    // Handle navigation clicks
-    document.querySelectorAll('nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const href = this.getAttribute('href');
-            const isAuthRequired = this.closest('.auth-required');
-            
-            if (isAuthRequired && !firebase.auth().currentUser) {
-                console.log('Auth required, user not logged in. Redirecting to sign in page.');
-                window.location.href = '/index.html';
-                return;
-            }
-            
-            window.location.href = href;
-        });
-    });
-
-    // Logout functionality
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            firebase.auth().signOut().then(() => {
-                console.log('User signed out');
-                window.location.href = '/index.html';
-            }).catch((error) => {
-                console.error('Sign out error', error);
-            });
-        });
-    }
-
-    // Force logout if on sign-in page and already logged in
-    if ((window.location.pathname === '/' || window.location.pathname.endsWith('index.html')) && firebase.auth().currentUser) {
-        firebase.auth().signOut().then(() => {
-            console.log('User forcefully signed out on sign-in page');
-            window.location.reload();
-        }).catch((error) => {
-            console.error('Force sign out error', error);
-        });
-    }
-
-    // Contact form submission
-    const contactForm = document.getElementById('contact-form');
-    const successMessage = document.getElementById('success-message');
-    if (contactForm) {
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const name = contactForm.name.value;
-            const email = contactForm.email.value;
-            const message = contactForm.message.value;
-
-            try {
-                await db.collection('messages').add({
-                    name: name,
-                    email: email,
-                    message: message,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                successMessage.style.display = 'block';
-                contactForm.reset();
-            } catch (error) {
-                console.error('Error sending message:', error);
-                alert('Error sending message. Please try again.');
-            }
-        });
-    }
-
-    // Toggle between sign-in and sign-up forms
-    const signinForm = document.getElementById('signin-form');
-    const signupForm = document.getElementById('signup-form');
-    const toggleSignup = document.getElementById('toggle-signup');
-
-    if (toggleSignup) {
-        toggleSignup.addEventListener('click', (e) => {
-            e.preventDefault();
-            signinForm.style.display = signinForm.style.display === 'none' ? 'block' : 'none';
-            signupForm.style.display = signupForm.style.display === 'none' ? 'block' : 'none';
-            toggleSignup.textContent = toggleSignup.textContent === 'Sign up' ? 'Sign in' : 'Sign up';
-        });
-    }
-
-    // Sign-in functionality
-    if (signinForm) {
-        signinForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    console.log("User signed in:", userCredential.user);
-                    window.location.href = '/stock-market-website/pages/home.html';
-                })
-                .catch((error) => {
-                    console.error("Error signing in:", error);
-                    alert("Error signing in: " + error.message);
-                });
-        });
-    }
-
-    // Sign-up functionality
-    if (signupForm) {
-        signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = e.target.email.value;
-            const password = e.target.password.value;
-            const confirmPassword = e.target['confirm-password'].value;
-
-            if (password !== confirmPassword) {
-                alert("Passwords don't match");
-                return;
-            }
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    console.log("User signed up:", userCredential.user);
-                    window.location.href = '/stock-market-website/pages/home.html';
-                })
-                .catch((error) => {
-                    console.error("Error signing up:", error);
-                    alert("Error signing up: " + error.message);
-                });
-        });
-    }
-
-    // OAuth functionality
-    const oauthButtons = document.querySelectorAll('.oauth-btn');
-    oauthButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const provider = e.target.dataset.provider;
-            let authProvider;
-            switch(provider) {
-                case 'gmail':
-                    authProvider = new firebase.auth.GoogleAuthProvider();
-                    break;
-                case 'yahoo':
-                    authProvider = new firebase.auth.OAuthProvider('yahoo.com');
-                    break;
-                case 'microsoft':
-                    authProvider = new firebase.auth.OAuthProvider('microsoft.com');
-                    break;
-                default:
-                    console.error('Unknown provider:', provider);
-                    return;
-            }
-            auth.signInWithPopup(authProvider)
-                .then((result) => {
-                    console.log(`${provider} sign in successful:`, result.user);
-                    window.location.href = '/stock-market-website/pages/home.html';
-                })
-                .catch((error) => {
-                    console.error(`${provider} sign in error:`, error);
-                    alert(`Error signing in with ${provider}: ${error.message}`);
-                });
-        });
-    });
-
-    // Stock data fetching
-    async function fetchStockData(symbol) {
-        try {
-            const response = await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            if (data['Error Message']) {
-                throw new Error(data['Error Message']);
-            }
-            return data['Time Series (Daily)'];
-        } catch (error) {
-            console.error("Error fetching stock data:", error);
-            throw error;
-        }
-    }
-
-    // Chart updating
-    const chart = document.getElementById('chart');
-    const loading = document.getElementById('loading');
-    if (chart) {
-        const candleSeries = LightweightCharts.createChart(chart, {
-            width: chart.clientWidth,
-            height: chart.clientHeight
-        }).addCandlestickSeries();
-
-        async function updateChart(symbol) {
-            try {
-                loading.style.display = 'block';
-                const data = await fetchStockData(symbol);
-                const formattedData = Object.entries(data).map(([date, values]) => ({
-                    time: date,
-                    open: parseFloat(values['1. open']),
-                    high: parseFloat(values['2. high']),
-                    low: parseFloat(values['3. low']),
-                    close: parseFloat(values['4. close'])
-                })).reverse();
-                candleSeries.setData(formattedData);
-                updateStockInfo(symbol, formattedData[formattedData.length - 1]);
-            } catch (error) {
-                console.error("Error updating chart:", error);
-                alert("Error fetching stock data. Please try again.");
-            } finally {
-                loading.style.display = 'none';
-            }
-        }
-
-        function updateStockInfo(symbol, latestData) {
-            document.getElementById('stockSymbol').textContent = symbol;
-            document.getElementById('currentPrice').textContent = latestData.close;
-            document.getElementById('openPrice').textContent = latestData.open;
-            document.getElementById('highPrice').textContent = latestData.high;
-            document.getElementById('lowPrice').textContent = latestData.low;
-        }
-
-        // Initial chart load
-        updateChart('AAPL');
-
-        // Search functionality
-        const searchBtn = document.getElementById('searchBtn');
-        const symbolInput = document.getElementById('symbolInput');
-        if (searchBtn && symbolInput) {
-            searchBtn.addEventListener('click', () => {
-                const symbol = symbolInput.value.toUpperCase();
-                updateChart(symbol);
-            });
-        }
-    }
-
-    // Responsive chart resizing
-    window.addEventListener('resize', () => {
-        if (chart) {
-            chart.applyOptions({ width: chart.clientWidth, height: chart.clientHeight });
-        }
-    });
-
-    // Auth state change handler
-    auth.onAuthStateChanged((user) => {
-        console.log('Auth state changed. User:', user ? 'Logged in' : 'Not logged in');
-        console.log('Current path:', window.location.pathname);
-
-        const authRequired = document.querySelectorAll('.auth-required');
-        const authNotRequired = document.querySelectorAll('.auth-not-required');
-        const currentPath = window.location.pathname;
-
-        // Function to check if the current path is an authenticated page
-        const isAuthenticatedPage = (path) => {
-            const authenticatedPages = ['/pages/home.html', '/pages/market.html', '/pages/contact.html'];
-            return authenticatedPages.some(page => path.endsWith(page));
-        };
-
-        // Function to check if the current path is the index page
-        const isIndexPage = (path) => {
-            return path === '/' || path.endsWith('/index.html');
-        };
-
-        if (user) {
-            console.log('User is signed in. Showing auth-required elements.');
-            authRequired.forEach(el => el.style.display = 'inline-block');
-            authNotRequired.forEach(el => el.style.display = 'none');
-            
-            if (isIndexPage(currentPath)) {
-                console.log('On index page while logged in. Redirecting to home.');
-                window.location.href = '/pages/home.html';
-            } else {
-                console.log('On authenticated page while logged in. No redirection needed.');
-            }
-        } else {
-            console.log('No user is signed in. Showing auth-not-required elements.');
-            authRequired.forEach(el => el.style.display = 'none');
-            authNotRequired.forEach(el => el.style.display = 'inline-block');
-            
-            if (isAuthenticatedPage(currentPath)) {
-                console.log('On authenticated page while not logged in. Redirecting to index.');
-                window.location.href = '/index.html';
-            } else {
-                console.log('On index page while not logged in. No redirection needed.');
-            }
-        }
-    });
 });
 
-function logout() {
-    auth.signOut().then(() => {
-        console.log('User signed out');
-        window.location.href = '/index.html';
-    }).catch((error) => {
-        console.error('Error signing out:', error);
+// Google Sign-In
+const googleSignInBtn = document.querySelector('.oauth-btn[data-provider="gmail"]');
+if (googleSignInBtn) {
+    googleSignInBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('Google Sign-In button clicked');
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                console.log('Google Sign-In Successful', result.user);
+                window.location.href = '/pages/home.html';
+            }).catch((error) => {
+                console.error('Google Sign-In Error', error.code, error.message);
+                alert('Failed to sign in with Google. Error: ' + error.message);
+            });
     });
 }
 
-// Add this event listener after your DOM content is loaded
-document.getElementById('logoutBtn').addEventListener('click', logout);
+// Logout functionality
+const logoutBtn = document.getElementById('logoutBtn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+        auth.signOut().then(() => {
+            console.log('User signed out');
+            window.location.href = '/index.html';
+        }).catch((error) => {
+            console.error('Sign out error', error);
+        });
+    });
+}
+
+// Handle navigation clicks
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const href = this.getAttribute('href');
+        const isAuthRequired = this.closest('.auth-required');
+        
+        if (isAuthRequired && !auth.currentUser) {
+            console.log('Auth required, user not logged in. Redirecting to sign in page.');
+            window.location.href = '/index.html';
+            return;
+        }
+        
+        window.location.href = href;
+    });
+});
