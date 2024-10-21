@@ -1,8 +1,8 @@
 /* Base styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--secondary-color-1);
-    color: var(--primary-color-2);
+    background-color: var(--primary-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -11,7 +11,8 @@ body {
 }
 
 header {
-    background-color: var(--primary-color-2);
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--secondary-color);
     padding: 1rem;
 }
 
@@ -27,8 +28,12 @@ nav ul li {
 }
 
 nav ul li a {
-    color: var(--secondary-color-2);
+    color: var(--text-color);
     text-decoration: none;
+}
+
+nav ul li a:hover {
+    color: var(--secondary-color);
 }
 
 main {
@@ -140,14 +145,15 @@ button:hover {
 
 /* Footer styles */
 footer {
-    background-color: var(--primary-color-2);
-    color: var(--secondary-color-2);
+    background-color: var(--primary-color);
+    border-top: 1px solid var(--secondary-color);
+    color: var(--text-color);
     text-align: center;
     padding: 1rem;
 }
 
 footer nav a {
-    color: var(--secondary-color-2);
+    color: var(--text-color);
     text-decoration: none;
     margin: 0 0.5rem;
     transition: color 0.3s ease;
@@ -305,17 +311,18 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
 
 /* Adjust the signup-container to accommodate the logo */
 .signup-container {
-    background-color: var(--secondary-color-2);
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(114, 22, 244, 0.1);
     width: 300px;
     margin-top: 20px; /* Add some top margin to center the container vertically */
 }
 
 h1 {
     text-align: center;
-    color: var(--primary-color-1);
+    color: var(--secondary-color);
 }
 
 form {
@@ -323,43 +330,43 @@ form {
     flex-direction: column;
 }
 
-input, button {
+input {
     margin-bottom: 1rem;
     padding: 0.5rem;
-    border: 1px solid var(--primary-color-1);
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
     border-radius: 4px;
+    color: var(--text-color);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
 }
 
 button {
-    background-color: var(--primary-color-1);
-    color: var(--secondary-color-2);
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
     border: none;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #5b11c7; /* Darker shade of primary color 1 */
-}
-
-.divider {
-    text-align: center;
-    margin: 1rem 0;
-    color: var(--text-color);
+    background-color: #5b11c7; /* Darker shade of secondary color */
 }
 
 .google-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--primary-color-2);
-    color: var(--secondary-color-2);
-    border: 1px solid var(--primary-color-1);
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    color: var(--text-color);
 }
 
-.google-btn img {
-    width: 18px;
-    margin-right: 0.5rem;
+.google-btn:hover {
+    background-color: var(--secondary-color);
 }
 
 .signin-link {
@@ -368,12 +375,13 @@ button:hover {
 }
 
 .signin-link a {
-    color: var(--primary-color-1);
+    color: var(--secondary-color);
     text-decoration: none;
 }
 
 .signin-link a:hover {
     text-decoration: underline;
+    color: var(--accent-color);
 }
 
 /* Add these styles to your existing CSS */
@@ -389,8 +397,8 @@ body {
 }
 
 :root {
-    --primary-color-1: #7216f4;
-    --primary-color-2: #000000;
-    --secondary-color-1: #f9e1cf;
-    --secondary-color-2: #fffdfc;
+    --primary-color: #000000;
+    --secondary-color: #7216f4;
+    --accent-color: #f9e1cf;
+    --text-color: #ffffff;
 }
