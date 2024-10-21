@@ -3,51 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMarket - Stock Market Website</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles/main.css">
+    <title>Sign Up - GMarket</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li class="auth-not-required"><a href="/index.html">Sign In/Sign Up</a></li>
-                <li class="auth-required"><a href="/pages/home.html">Home</a></li>
-                <li class="auth-required"><a href="/pages/market.html">Market</a></li>
-                <li class="auth-required"><a href="/pages/contact.html">Contact Us</a></li>
-                <li class="auth-required"><button id="logoutBtn">Logout</button></li>
+                <li><a href="index.html">Sign Up</a></li>
+                <li><a href="pages/home.html">Home</a></li>
+                <li><a href="pages/market.html">Market</a></li>
+                <li><a href="pages/contact.html">Contact Us</a></li>
             </ul>
         </nav>
     </header>
+
     <main>
         <h1>Welcome to GMarket</h1>
-        <div id="auth-container">
-            <form id="signin-form">
-                <h2>Sign In</h2>
-                <input type="email" id="signin-email" placeholder="Email" required>
-                <input type="password" id="signin-password" placeholder="Password" required>
-                <button type="submit">Sign In</button>
-            </form>
-            <form id="signup-form">
-                <h2>Sign Up</h2>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="password" id="password" placeholder="Password" required>
-                <input type="text" id="full_name" placeholder="Full Name" required>
-                <input type="text" id="favourite_song" placeholder="Favourite Song" required>
-                <input type="text" id="milk_before_cereal" placeholder="Milk before cereal?" required>
-                <button type="button" id="signupBtn">Sign Up</button>
-            </form>
-            <p>Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
-            <div>
-                <button class="oauth-btn" data-provider="gmail">Sign in with Gmail</button>
-                <button class="oauth-btn" data-provider="yahoo">Sign in with Yahoo</button>
-                <button class="oauth-btn" data-provider="microsoft">Sign in with Microsoft</button>
-            </div>
-        </div>
+        <h2>Sign Up</h2>
+        
+        <form id="signup-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="text" id="full_name" placeholder="Full Name" required>
+            <input type="text" id="favourite_song" placeholder="Favourite Song" required>
+            <input type="text" id="milk_before_cereal" placeholder="Milk before cereal?" required>
+            <button type="button" id="signupBtn">Sign Up</button>
+        </form>
+
+        <button class="oauth-btn" data-provider="gmail">Sign up with Gmail</button>
+
+        <p>Already have an account? <a href="signin.html" id="signinLink">Sign in</a></p>
     </main>
+
     <footer>
-        <p>&copy; <span id="current-year"></span> GMarket. All rights reserved.</p>
+        <p>&copy; 2024 GMarket. All rights reserved.</p>
     </footer>
+
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
@@ -64,8 +56,5 @@
         firebase.initializeApp(firebaseConfig);
     </script>
     <script src="scripts/main.js"></script>
-    <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
 </body>
 </html>

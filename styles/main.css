@@ -166,18 +166,17 @@ footer nav a:hover {
 
 /* OAuth buttons */
 .oauth-btn {
-    background-color: #7216f4;
-    color: #FFFFFF;
-    border: none;
+    background-color: #4285F4;
+    color: white;
     padding: 10px 20px;
-    margin: 5px 0;
-    border-radius: 4px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .oauth-btn:hover {
-    background-color: #5a11c3;
+    background-color: #357AE8;
 }
 
 /* Toggle signup link */
@@ -303,4 +302,14 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
 
 .signup-form {
     display: none;
+}
+
+/* Add styles for the sign-in link */
+#signinLink {
+    color: #8a2be2;
+    text-decoration: none;
+}
+
+#signinLink:hover {
+    text-decoration: underline;
 }
