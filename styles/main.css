@@ -1,8 +1,8 @@
 /* Base styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-color);
+    background-color: var(--secondary-color-1);
+    color: var(--primary-color-2);
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -11,7 +11,7 @@ body {
 }
 
 header {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color-2);
     padding: 1rem;
 }
 
@@ -27,7 +27,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: var(--white);
+    color: var(--secondary-color-2);
     text-decoration: none;
 }
 
@@ -140,14 +140,14 @@ button:hover {
 
 /* Footer styles */
 footer {
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--primary-color-2);
+    color: var(--secondary-color-2);
     text-align: center;
     padding: 1rem;
 }
 
 footer nav a {
-    color: var(--white);
+    color: var(--secondary-color-2);
     text-decoration: none;
     margin: 0 0.5rem;
     transition: color 0.3s ease;
@@ -305,7 +305,7 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
 
 /* Adjust the signup-container to accommodate the logo */
 .signup-container {
-    background-color: var(--white);
+    background-color: var(--secondary-color-2);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -315,7 +315,7 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
 
 h1 {
     text-align: center;
-    color: var(--primary-color);
+    color: var(--primary-color-1);
 }
 
 form {
@@ -326,20 +326,20 @@ form {
 input, button {
     margin-bottom: 1rem;
     padding: 0.5rem;
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--primary-color-1);
     border-radius: 4px;
 }
 
 button {
-    background-color: var(--primary-color);
-    color: var(--white);
+    background-color: var(--primary-color-1);
+    color: var(--secondary-color-2);
     border: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #5b11c7; /* Darker shade of primary color */
+    background-color: #5b11c7; /* Darker shade of primary color 1 */
 }
 
 .divider {
@@ -352,9 +352,9 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--white);
-    color: var(--text-color);
-    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color-2);
+    color: var(--secondary-color-2);
+    border: 1px solid var(--primary-color-1);
 }
 
 .google-btn img {
@@ -368,7 +368,7 @@ button:hover {
 }
 
 .signin-link a {
-    color: var(--primary-color);
+    color: var(--primary-color-1);
     text-decoration: none;
 }
 
@@ -389,8 +389,8 @@ body {
 }
 
 :root {
-    --primary-color: #7216f4;
-    --background-color: #f9e1cf;
-    --text-color: #000000;
-    --white: #fffdfc;
+    --primary-color-1: #7216f4;
+    --primary-color-2: #000000;
+    --secondary-color-1: #f9e1cf;
+    --secondary-color-2: #fffdfc;
 }
