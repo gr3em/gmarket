@@ -1,3 +1,9 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+import { getDatabase, ref, set, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCNrtV3TsMljkJHtst2aX87IeZOcQyNQ9A",
@@ -10,10 +16,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const analytics = firebase.analytics();
-const auth = firebase.auth();
-const database = firebase.database();
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const database = getDatabase(app);
 
 // Set up our register function
 function register() {
@@ -35,13 +41,13 @@ function register() {
   }
  
   // Move on with Auth
-  auth.createUserWithEmailAndPassword(email, password)
+  createUserWithEmailAndPassword(auth, email, password)
   .then(function() {
     // Declare user variable
     var user = auth.currentUser
 
     // Add this user to Firebase Database
-    var database_ref = database.ref()
+    var database_ref = ref(database)
 
     // Create User data
     var user_data = {
@@ -53,9 +59,9 @@ function register() {
     }
 
     // Push to Firebase Database
-    database_ref.child('users/' + user.uid).set(user_data)
+    set(ref(database, 'users/' + user.uid), user_data)
 
-    // DOne
+    // Done
     alert('User Created!!');
     // Redirect to home page
     window.location.href = '/pages/home.html';
@@ -81,13 +87,13 @@ function login() {
     return
   }
 
-  auth.signInWithEmailAndPassword(email, password)
+  signInWithEmailAndPassword(auth, email, password)
   .then(function() {
     // Declare user variable
     var user = auth.currentUser
 
     // Add this user to Firebase Database
-    var database_ref = database.ref()
+    var database_ref = ref(database)
 
     // Create User data
     var user_data = {
@@ -95,9 +101,9 @@ function login() {
     }
 
     // Push to Firebase Database
-    database_ref.child('users/' + user.uid).update(user_data)
+    update(ref(database, 'users/' + user.uid), user_data)
 
-    // DOne
+    // Done
     alert('User Logged In!!');
     // Redirect to home page
     window.location.href = '/pages/home.html';
@@ -169,8 +175,8 @@ document.addEventListener('DOMContentLoaded', function() {
   if (googleSignInBtn) {
     googleSignInBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      const provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
+      const provider = new GoogleAuthProvider();
+      signInWithPopup(auth, provider)
         .then((result) => {
           console.log('Google Sign-In Successful', result.user);
           // Redirect to home page or update UI
