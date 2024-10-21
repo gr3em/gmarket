@@ -29,12 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
-    googleSignUpBtn.addEventListener('click', function() {
+    googleSignUpBtn.addEventListener('click', function(e) {
+        e.preventDefault();
         const provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().signInWithPopup(provider)
             .then((result) => {
                 console.log("Google Sign-In Successful", result.user);
-                window.location.href = 'dashboard.html'; // Redirect to dashboard
+                // Redirect to dashboard or home page after successful sign-in
+                window.location.href = 'dashboard.html';
             }).catch((error) => {
                 console.error("Google Sign-In Error", error);
                 alert(error.message);
