@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - GMarket</title>
+    <link rel="stylesheet" href="../styles/main.css">
+</head>
+<body>
+    <div class="signup-container">
+        <h1>Create your GMarket account</h1>
+        
+        <form id="signup-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <input type="text" id="username" placeholder="Username" required>
+            <button type="submit" id="signupBtn">Create account</button>
+        </form>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <button id="googleSignUpBtn" class="google-btn">
+            <img src="../images/google-icon.png" alt="Google icon"> Sign up with Google
+        </button>
+
+        <p class="signin-link">Already have an account? <a href="signin.html">Sign in</a></p>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="../scripts/firebase-config.js"></script>
+    <script src="../scripts/signup.js"></script>
+</body>
+</html>
