@@ -4,11 +4,12 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
-    padding: 0;
+    padding: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 header {
@@ -300,12 +301,24 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
     }
 }
 
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 200px;
+    height: auto;
+}
+
+/* Adjust the signup-container to accommodate the logo */
 .signup-container {
     background-color: var(--white);
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     width: 300px;
+    margin-top: 20px; /* Add some top margin to center the container vertically */
 }
 
 h1 {
@@ -369,4 +382,17 @@ button:hover {
 
 .signin-link a:hover {
     text-decoration: underline;
+}
+
+/* Add these styles to your existing CSS */
+
+/* You may need to adjust the body styles to ensure proper centering */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Use min-height instead of height to accommodate the logo */
+    margin: 0;
+    padding: 20px 0; /* Add some vertical padding */
+    box-sizing: border-box;
 }
