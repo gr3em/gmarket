@@ -7,29 +7,35 @@
     <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
-    <div class="signup-container">
-        <div class="logo-container">
-            <img src="../images/gmarket-logo.png" alt="GMarket Logo" class="logo">
-        </div>
-        <h1>Create your GMarket account</h1>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="market.html">Market</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="signup-container">
+        <img src="../images/gmarket-logo.png" alt="GMarket Logo" class="logo">
+        <h1>Sign Up</h1>
         
         <form id="signup-form">
             <input type="email" id="email" placeholder="Email" required>
             <input type="password" id="password" placeholder="Password" required>
-            <input type="text" id="username" placeholder="Username" required>
-            <button type="submit" id="signupBtn">Create account</button>
+            <input type="text" id="fullName" placeholder="Full Name" required>
+            <button type="submit" id="signupBtn">Sign Up</button>
         </form>
 
-        <div class="divider">
-            <span>or</span>
-        </div>
-
-        <button id="googleSignUpBtn" class="google-btn">
-            <img src="../images/google-icon.png" alt="Google icon"> Sign up with Google
-        </button>
+        <button id="googleSignUpBtn" class="google-btn">Sign up with Gmail</button>
 
         <p class="signin-link">Already have an account? <a href="signin.html">Sign in</a></p>
-    </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 GMarket. All rights reserved.</p>
+    </footer>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>

@@ -4,17 +4,14 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
-    padding: 20px 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 0;
     min-height: 100vh;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
-    background-color: #000000;
-    border-bottom: 1px solid #7216f4;
+    background-color: var(--primary-color);
     padding: 1rem;
 }
 
@@ -22,27 +19,25 @@ nav ul {
     list-style-type: none;
     padding: 0;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 1rem;
 }
 
 nav ul li a {
-    color: #FFFFFF;
+    color: var(--white);
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-}
-
-nav ul li a:hover {
-    color: #7216f4;
 }
 
 main {
-    flex: 1;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #000000;
 }
 
 /* Typography */
@@ -59,8 +54,6 @@ p {
 form {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
-    margin-bottom: 1rem;
 }
 
 label {
@@ -147,15 +140,14 @@ button:hover {
 
 /* Footer styles */
 footer {
-    background-color: #000000;
-    color: #FFFFFF;
-    padding: 1rem;
+    background-color: var(--primary-color);
+    color: var(--white);
     text-align: center;
-    border-top: 1px solid #7216f4;
+    padding: 1rem;
 }
 
 footer nav a {
-    color: #FFFFFF;
+    color: var(--white);
     text-decoration: none;
     margin: 0 0.5rem;
     transition: color 0.3s ease;
@@ -389,10 +381,16 @@ button:hover {
 /* You may need to adjust the body styles to ensure proper centering */
 body {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
     min-height: 100vh; /* Use min-height instead of height to accommodate the logo */
     margin: 0;
-    padding: 20px 0; /* Add some vertical padding */
+    padding: 0; /* Add some vertical padding */
     box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #7216f4;
+    --background-color: #f9e1cf;
+    --text-color: #000000;
+    --white: #fffdfc;
 }
