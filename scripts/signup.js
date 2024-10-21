@@ -1,3 +1,6 @@
+// Initialize Firebase (make sure this is at the top of your file)
+firebase.initializeApp(firebaseConfig);
+
 document.addEventListener('DOMContentLoaded', function() {
     const signupForm = document.getElementById('signup-form');
     const googleSignUpBtn = document.getElementById('googleSignUpBtn');
@@ -6,14 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        const username = document.getElementById('username').value;
+        const fullName = document.getElementById('fullName').value;
 
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
                 return user.updateProfile({
-                    displayName: username
+                    displayName: fullName
                 });
             })
             .then(() => {
