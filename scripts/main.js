@@ -144,6 +144,7 @@ function validate_field(field) {
   }
 }
 
+// Google Sign-In
 document.addEventListener('DOMContentLoaded', function() {
   // Sign Up button
   const signupBtn = document.getElementById('signupBtn');
@@ -154,28 +155,29 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Sign In button
-  const signinBtn = document.getElementById('signinBtn');
-  if (signinBtn) {
-    signinBtn.addEventListener('click', function(e) {
+  // Login button (if you have one)
+  const loginBtn = document.getElementById('loginBtn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', function(e) {
       e.preventDefault();
       login();
     });
   }
 
-  // Google Sign-In/Sign-Up
-  const googleBtn = document.querySelector('.oauth-btn[data-provider="gmail"]');
-  if (googleBtn) {
-    googleBtn.addEventListener('click', function(e) {
+  // Google Sign-In
+  const googleSignInBtn = document.querySelector('.oauth-btn[data-provider="gmail"]');
+  if (googleSignInBtn) {
+    googleSignInBtn.addEventListener('click', function(e) {
       e.preventDefault();
       const provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider)
         .then((result) => {
-          console.log('Google Sign-In/Sign-Up Successful', result.user);
+          console.log('Google Sign-In Successful', result.user);
+          // Redirect to home page or update UI
           window.location.href = '/pages/home.html';
         }).catch((error) => {
-          console.error('Google Sign-In/Sign-Up Error', error.code, error.message);
-          alert('Failed to sign in/sign up with Google. Error: ' + error.message);
+          console.error('Google Sign-In Error', error.code, error.message);
+          alert('Failed to sign in with Google. Error: ' + error.message);
         });
     });
   }
