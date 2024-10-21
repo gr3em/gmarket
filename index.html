@@ -3,58 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - GMarket</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <title>GMarket - Redirecting to Sign In</title>
+    <meta http-equiv="refresh" content="0;url=/pages/signin.html">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Sign Up</a></li>
-                <li><a href="pages/home.html">Home</a></li>
-                <li><a href="pages/market.html">Market</a></li>
-                <li><a href="pages/contact.html">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <h1>Welcome to GMarket</h1>
-        <h2>Sign Up</h2>
-        
-        <form id="signup-form">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <input type="text" id="full_name" placeholder="Full Name" required>
-            <input type="text" id="favourite_song" placeholder="Favourite Song" required>
-            <input type="text" id="milk_before_cereal" placeholder="Milk before cereal?" required>
-            <button type="button" id="signupBtn">Sign Up</button>
-        </form>
-
-        <button class="oauth-btn" data-provider="gmail">Sign up with Gmail</button>
-
-        <p>Already have an account? <a href="signin.html" id="signinLink">Sign in</a></p>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 GMarket. All rights reserved.</p>
-    </footer>
-
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
-    <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCNrtV3TsMljkJHtst2aX87IeZOcQyNQ9A",
-            authDomain: "stock-market-ce23e.firebaseapp.com",
-            projectId: "stock-market-ce23e",
-            storageBucket: "stock-market-ce23e.appspot.com",
-            messagingSenderId: "996301529064",
-            appId: "1:996301529064:web:e2409079602e8733714e5d",
-            measurementId: "G-QMLTZ4S849"
-        };
-        firebase.initializeApp(firebaseConfig);
-    </script>
-    <script src="scripts/main.js"></script>
+    <p>If you are not redirected, <a href="/pages/signin.html">click here to sign in</a>.</p>
 </body>
 </html>

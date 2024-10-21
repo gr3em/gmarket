@@ -4,21 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up - GMarket</title>
-    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
     <header>
         <nav>
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="market.html">Market</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="/pages/signin.html">Sign In</a></li>
+                <li><a href="/pages/signup.html">Sign Up</a></li>
+                <li><a href="/pages/market.html">Market</a></li>
+                <li><a href="/pages/contact.html">Contact Us</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="signup-container">
-        <img src="../images/gmarket-logo.png" alt="GMarket Logo" class="logo">
+        <img src="/images/gmarket-logo.png" alt="GMarket Logo" class="logo">
         <h1>Sign Up</h1>
         
         <form id="signup-form">
@@ -28,18 +29,21 @@
             <button type="submit" id="signupBtn">Sign Up</button>
         </form>
 
-        <button id="googleSignUpBtn" class="google-btn">Sign up with Gmail</button>
+        <button id="googleSignUpBtn" class="google-btn">Sign up with Google</button>
 
-        <p class="signin-link">Already have an account? <a href="signin.html">Sign in</a></p>
+        <p class="signin-link">Already have an account? <a href="/pages/signin.html">Sign in</a></p>
     </main>
 
     <footer>
-        <p>&copy; 2024 GMarket. All rights reserved.</p>
+        <p>&copy; <span id="current-year"></span> GMarket. All rights reserved.</p>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-    <script src="../scripts/firebase-config.js"></script>
-    <script src="../scripts/signup.js"></script>
+    <script src="/scripts/firebase-config.js"></script>
+    <script src="/scripts/signup.js"></script>
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
