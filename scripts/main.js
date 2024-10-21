@@ -56,7 +56,9 @@ function register() {
     database_ref.child('users/' + user.uid).set(user_data)
 
     // DOne
-    alert('User Created!!')
+    alert('User Created!!');
+    // Redirect to home page
+    window.location.href = '/pages/home.html';
   })
   .catch(function(error) {
     // Firebase will use this to alert of its errors
@@ -96,8 +98,9 @@ function login() {
     database_ref.child('users/' + user.uid).update(user_data)
 
     // DOne
-    alert('User Logged In!!')
-
+    alert('User Logged In!!');
+    // Redirect to home page
+    window.location.href = '/pages/home.html';
   })
   .catch(function(error) {
     // Firebase will use this to alert of its errors
@@ -143,15 +146,35 @@ function validate_field(field) {
 
 // Google Sign-In
 document.addEventListener('DOMContentLoaded', function() {
+  // Sign Up button
+  const signupBtn = document.getElementById('signupBtn');
+  if (signupBtn) {
+    signupBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      register();
+    });
+  }
+
+  // Login button (if you have one)
+  const loginBtn = document.getElementById('loginBtn');
+  if (loginBtn) {
+    loginBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      login();
+    });
+  }
+
+  // Google Sign-In
   const googleSignInBtn = document.querySelector('.oauth-btn[data-provider="gmail"]');
   if (googleSignInBtn) {
     googleSignInBtn.addEventListener('click', function(e) {
       e.preventDefault();
       const provider = new firebase.auth.GoogleAuthProvider();
-      auth.signInWithPopup(provider)
+      firebase.auth().signInWithPopup(provider)
         .then((result) => {
           console.log('Google Sign-In Successful', result.user);
-          // You can redirect or update UI here
+          // Redirect to home page or update UI
+          window.location.href = '/pages/home.html';
         }).catch((error) => {
           console.error('Google Sign-In Error', error.code, error.message);
           alert('Failed to sign in with Google. Error: ' + error.message);
