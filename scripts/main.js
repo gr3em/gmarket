@@ -22,6 +22,32 @@ const auth = getAuth(app);
 const database = getDatabase(app);
 
 document.addEventListener('DOMContentLoaded', function() {
+  const auth = getAuth(app);
+  
+  auth.onAuthStateChanged(function(user) {
+    const authRequired = document.querySelectorAll('.auth-required');
+    const authNotRequired = document.querySelectorAll('.auth-not-required');
+    
+    if (user) {
+      authRequired.forEach(el => el.style.display = 'block');
+      authNotRequired.forEach(el => el.style.display = 'none');
+    } else {
+      authRequired.forEach(el => el.style.display = 'none');
+      authNotRequired.forEach(el => el.style.display = 'block');
+    }
+  });
+
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      auth.signOut().then(() => {
+        window.location.href = '/pages/signin.html';
+      }).catch((error) => {
+        console.error('Sign Out Error', error);
+      });
+    });
+  }
+
   // Sign Up form
   const signupForm = document.getElementById('signup-form');
   if (signupForm) {

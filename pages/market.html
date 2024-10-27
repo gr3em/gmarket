@@ -17,7 +17,6 @@
                 <li><a href="/pages/contact.html">Contact Us</a></li>
                 <li class="auth-not-required"><a href="/pages/signin.html">Sign In</a></li>
                 <li class="auth-not-required"><a href="/pages/signup.html">Sign Up</a></li>
-                <li class="auth-required"><button id="logoutBtn">Logout</button></li>
             </ul>
         </nav>
     </header>
@@ -219,5 +218,8 @@
             document.querySelector('main').appendChild(errorDiv);
         }
     </script>
+    <div id="logout-container" class="auth-required" style="position: fixed; bottom: 20px; right: 20px; display: none;">
+        <button id="logoutBtn">Logout</button>
+    </div>
 </body>
 </html>

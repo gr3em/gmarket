@@ -240,6 +240,10 @@ footer nav a:hover {
     display: none;
 }
 
+#logout-container {
+    z-index: 1000;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     nav ul {
