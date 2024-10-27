@@ -22,7 +22,7 @@ nav ul {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-}
+}ß
 
 nav ul li {
     display: flex;
@@ -322,6 +322,16 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
 .logo {
     max-width: 200px;
     height: auto;
+}
+
+header .logo-container {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+header .logo {
+    max-width: 100px;
 }
 
 /* Adjust the signup-container to accommodate the logo */
