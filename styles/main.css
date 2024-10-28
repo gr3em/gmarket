@@ -468,3 +468,7 @@ body {
     align-items: center;
     height: 200px;
 }
+
+.auth-page nav {
+    display: none;
+}
