@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles/main.css">
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js"></script>
 </head>
 <body>
     <header>
@@ -132,53 +132,34 @@
                     const chartContainer = document.getElementById(container);
                     const widget = new TradingView.widget({
                         "width": "100%",
-                        "height": "150px",
+                        "height": "400",
                         "symbol": symbol,
                         "interval": "D",
-                        "timezone": "Etc/UTC",
+                        "timezone": "exchange",
                         "theme": "dark",
-                        "style": type,
+                        "style": "1",
                         "locale": "en",
-                        "toolbar_bg": "#f1f3f6",
                         "enable_publishing": false,
-                        "hide_top_toolbar": true,
-                        "hide_legend": true,
-                        "save_image": false,
+                        "allow_symbol_change": true,
                         "container_id": container,
+                        "hide_top_toolbar": false,
+                        "hide_legend": false,
+                        "save_image": false,
+                        "studies": [
+                            "MASimple@tv-basicstudies"
+                        ],
+                        "show_popup_button": false,
+                        "popup_width": "1000",
+                        "popup_height": "650",
                         "autosize": true
                     });
 
                     widget.onChartReady(() => {
-                        // Chart loaded successfully
                         resolve();
                     });
 
-                    const buttonContainer = document.createElement('div');
-                    buttonContainer.className = 'chart-buttons';
-                    
-                    const lineButton = document.createElement('button');
-                    lineButton.textContent = 'Line';
-                    lineButton.onclick = () => widget.chart().setChartType(1);
-
-                    const candleButton = document.createElement('button');
-                    candleButton.textContent = 'Candle';
-                    candleButton.onclick = () => widget.chart().setChartType(3);
-
-                    const bothButton = document.createElement('button');
-                    bothButton.textContent = 'Both';
-                    bothButton.onclick = () => {
-                        widget.chart().setChartType(3);
-                        widget.chart().createStudy('Moving Average', false, false, [10], null, {'plot.color': 'rgb(150, 95, 196)'});
-                    };
-
-                    buttonContainer.appendChild(lineButton);
-                    buttonContainer.appendChild(candleButton);
-                    buttonContainer.appendChild(bothButton);
-                    chartContainer.parentNode.insertBefore(buttonContainer, chartContainer.nextSibling);
-
                 } catch (error) {
                     console.error(`Error creating chart for ${symbol}:`, error);
-                    showErrorMessage(`Failed to load chart for ${symbol}`);
                     reject(error);
                 }
             });
@@ -189,27 +170,24 @@
         }
 
         const charts = [
-            { id: "index-sp500", symbol: "FOREXCOM:SPXUSD", title: "S&P 500" },
-            { id: "index-nasdaq", symbol: "NASDAQ:IXIC", title: "NASDAQ Composite" },
-            { id: "index-djia", symbol: "DJ:DJI", title: "Dow Jones Industrial Average" },
-            { id: "stock-aapl", symbol: "NASDAQ:AAPL", title: "AAPL - Apple Inc." },
-            { id: "stock-googl", symbol: "NASDAQ:GOOGL", title: "GOOGL - Alphabet Inc." },
-            { id: "stock-msft", symbol: "NASDAQ:MSFT", title: "MSFT - Microsoft Corp." },
-            { id: "etf-spy", symbol: "AMEX:SPY", title: "SPY - SPDR S&P 500 ETF" },
-            { id: "etf-qqq", symbol: "NASDAQ:QQQ", title: "QQQ - Invesco QQQ Trust" },
-            { id: "etf-voo", symbol: "AMEX:VOO", title: "VOO - Vanguard S&P 500 ETF" },
-            { id: "crypto-btcusd", symbol: "BITSTAMP:BTCUSD", title: "BTC/USD - Bitcoin" },
-            { id: "crypto-ethusd", symbol: "BITSTAMP:ETHUSD", title: "ETH/USD - Ethereum" },
-            { id: "crypto-xrpusd", symbol: "BITSTAMP:XRPUSD", title: "XRP/USD - Ripple" },
-            { id: "forex-eurusd", symbol: "FX:EURUSD", title: "EUR/USD - Euro" },
-            { id: "forex-gbpusd", symbol: "FX:GBPUSD", title: "GBP/USD - British Pound" },
-            { id: "forex-usdjpy", symbol: "FX:USDJPY", title: "JPY/USD - Japanese Yen" },
-            { id: "futures-cl1", symbol: "NYMEX:CL1!", title: "CL1 - Crude Oil" },
-            { id: "futures-gc1", symbol: "COMEX:GC1!", title: "GC1 - Gold" },
-            { id: "futures-zc1", symbol: "CBOT:ZC1!", title: "ZC1 - Corn" },
-            { id: "bond-us10y", symbol: "FRED:DGS10", title: "US 10-Year Treasury" },
-            { id: "bond-de10y", symbol: "FRED:IRLTLT01DEM156N", title: "DE 10-Year Government Bond" },
-            { id: "bond-gb10y", symbol: "FRED:IRLTLT01GBM156N", title: "GB 10-Year Government Bond" }
+            { id: "index-sp500", symbol: "SPX", title: "S&P 500" },
+            { id: "index-nasdaq", symbol: "NASDAQ:NDX", title: "NASDAQ 100" },
+            { id: "index-djia", symbol: "DJIA", title: "Dow Jones Industrial Average" },
+            { id: "stock-aapl", symbol: "AAPL", title: "AAPL - Apple Inc." },
+            { id: "stock-googl", symbol: "GOOGL", title: "GOOGL - Alphabet Inc." },
+            { id: "stock-msft", symbol: "MSFT", title: "MSFT - Microsoft Corp." },
+            { id: "etf-spy", symbol: "SPY", title: "SPY - SPDR S&P 500 ETF" },
+            { id: "etf-qqq", symbol: "QQQ", title: "QQQ - Invesco QQQ Trust" },
+            { id: "etf-voo", symbol: "VOO", title: "VOO - Vanguard S&P 500 ETF" },
+            { id: "crypto-btcusd", symbol: "BINANCE:BTCUSDT", title: "BTC/USD - Bitcoin" },
+            { id: "crypto-ethusd", symbol: "BINANCE:ETHUSDT", title: "ETH/USD - Ethereum" },
+            { id: "crypto-xrpusd", symbol: "BINANCE:XRPUSDT", title: "XRP/USD - Ripple" },
+            { id: "forex-eurusd", symbol: "OANDA:EURUSD", title: "EUR/USD" },
+            { id: "forex-gbpusd", symbol: "OANDA:GBPUSD", title: "GBP/USD" },
+            { id: "forex-usdjpy", symbol: "OANDA:USDJPY", title: "USD/JPY" },
+            { id: "futures-cl1", symbol: "NYMEX:CL1!", title: "Crude Oil Futures" },
+            { id: "futures-gc1", symbol: "COMEX:GC1!", title: "Gold Futures" },
+            { id: "futures-zc1", symbol: "CBOT:ZC1!", title: "Corn Futures" }
         ];
 
         function initCharts() {
