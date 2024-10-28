@@ -38,9 +38,18 @@
         <section id="stocks" class="market-section">
             <h2>Stocks</h2>
             <div class="chart-container">
-                <div class="chart" id="stock-aapl"></div>
-                <div class="chart" id="stock-googl"></div>
-                <div class="chart" id="stock-msft"></div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">AAPL - Apple Inc.</h3>
+                    <div class="chart" id="stock-aapl"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">GOOGL - Alphabet Inc.</h3>
+                    <div class="chart" id="stock-googl"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">MSFT - Microsoft Corp.</h3>
+                    <div class="chart" id="stock-msft"></div>
+                </div>
             </div>
         </section>
 
@@ -54,11 +63,20 @@
         </section>
 
         <section id="crypto" class="market-section">
-            <h2>Crypto</h2>
+            <h2>Cryptocurrencies</h2>
             <div class="chart-container">
-                <div class="chart" id="crypto-btcusd"></div>
-                <div class="chart" id="crypto-ethusd"></div>
-                <div class="chart" id="crypto-xrpusd"></div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">BTC/USD - Bitcoin</h3>
+                    <div class="chart" id="crypto-btcusd"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">ETH/USD - Ethereum</h3>
+                    <div class="chart" id="crypto-ethusd"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">XRP/USD - Ripple</h3>
+                    <div class="chart" id="crypto-xrpusd"></div>
+                </div>
             </div>
         </section>
 
@@ -113,8 +131,8 @@
                 try {
                     const chartContainer = document.getElementById(container);
                     const widget = new TradingView.widget({
-                        "width": 300,
-                        "height": 200,
+                        "width": "100%",
+                        "height": "100%",
                         "symbol": symbol,
                         "interval": "D",
                         "timezone": "Etc/UTC",
@@ -126,7 +144,8 @@
                         "hide_top_toolbar": true,
                         "hide_legend": true,
                         "save_image": false,
-                        "container_id": container
+                        "container_id": container,
+                        "autosize": true
                     });
 
                     widget.onChartReady(() => {
@@ -169,43 +188,43 @@
             document.getElementById('loading-indicator').style.display = 'none';
         }
 
+        const charts = [
+            { id: "index-sp500", symbol: "FOREXCOM:SPXUSD", title: "S&P 500" },
+            { id: "index-nasdaq", symbol: "NASDAQ:IXIC", title: "NASDAQ Composite" },
+            { id: "index-djia", symbol: "DJ:DJI", title: "Dow Jones Industrial Average" },
+            { id: "stock-aapl", symbol: "NASDAQ:AAPL", title: "AAPL - Apple Inc." },
+            { id: "stock-googl", symbol: "NASDAQ:GOOGL", title: "GOOGL - Alphabet Inc." },
+            { id: "stock-msft", symbol: "NASDAQ:MSFT", title: "MSFT - Microsoft Corp." },
+            { id: "etf-spy", symbol: "AMEX:SPY", title: "SPY - SPDR S&P 500 ETF" },
+            { id: "etf-qqq", symbol: "NASDAQ:QQQ", title: "QQQ - Invesco QQQ Trust" },
+            { id: "etf-voo", symbol: "AMEX:VOO", title: "VOO - Vanguard S&P 500 ETF" },
+            { id: "crypto-btcusd", symbol: "BITSTAMP:BTCUSD", title: "BTC/USD - Bitcoin" },
+            { id: "crypto-ethusd", symbol: "BITSTAMP:ETHUSD", title: "ETH/USD - Ethereum" },
+            { id: "crypto-xrpusd", symbol: "BITSTAMP:XRPUSD", title: "XRP/USD - Ripple" },
+            { id: "forex-eurusd", symbol: "FX:EURUSD", title: "EUR/USD - Euro" },
+            { id: "forex-gbpusd", symbol: "FX:GBPUSD", title: "GBP/USD - British Pound" },
+            { id: "forex-usdjpy", symbol: "FX:USDJPY", title: "JPY/USD - Japanese Yen" },
+            { id: "futures-cl1", symbol: "NYMEX:CL1!", title: "CL1 - Crude Oil" },
+            { id: "futures-gc1", symbol: "COMEX:GC1!", title: "GC1 - Gold" },
+            { id: "futures-zc1", symbol: "CBOT:ZC1!", title: "ZC1 - Corn" },
+            { id: "bond-us10y", symbol: "FRED:DGS10", title: "US 10-Year Treasury" },
+            { id: "bond-de10y", symbol: "FRED:IRLTLT01DEM156N", title: "DE 10-Year Government Bond" },
+            { id: "bond-gb10y", symbol: "FRED:IRLTLT01GBM156N", title: "GB 10-Year Government Bond" }
+        ];
+
         function initCharts() {
-            const charts = [
-                { id: "index-sp500", symbol: "FOREXCOM:SPXUSD" },
-                { id: "index-nasdaq", symbol: "NASDAQ:IXIC" },
-                { id: "index-djia", symbol: "DJ:DJI" },
-                { id: "stock-aapl", symbol: "NASDAQ:AAPL" },
-                { id: "stock-googl", symbol: "NASDAQ:GOOGL" },
-                { id: "stock-msft", symbol: "NASDAQ:MSFT" },
-                { id: "etf-spy", symbol: "AMEX:SPY" },
-                { id: "etf-qqq", symbol: "NASDAQ:QQQ" },
-                { id: "etf-voo", symbol: "AMEX:VOO" },
-                { id: "crypto-btcusd", symbol: "BITSTAMP:BTCUSD" },
-                { id: "crypto-ethusd", symbol: "BITSTAMP:ETHUSD" },
-                { id: "crypto-xrpusd", symbol: "BITSTAMP:XRPUSD" },
-                { id: "forex-eurusd", symbol: "FX:EURUSD" },
-                { id: "forex-gbpusd", symbol: "FX:GBPUSD" },
-                { id: "forex-usdjpy", symbol: "FX:USDJPY" },
-                { id: "futures-cl1", symbol: "NYMEX:CL1!" },
-                { id: "futures-gc1", symbol: "COMEX:GC1!" },
-                { id: "futures-zc1", symbol: "CBOT:ZC1!" },
-                { id: "bond-us10y", symbol: "FRED:DGS10" },
-                { id: "bond-de10y", symbol: "FRED:IRLTLT01DEM156N" },
-                { id: "bond-gb10y", symbol: "FRED:IRLTLT01GBM156N" }
-            ];
-
-            let chartsLoaded = 0;
-            let chartsFailed = 0;
-
             charts.forEach(chart => {
+                const wrapper = document.getElementById(chart.id).parentElement;
+                const titleEl = wrapper.querySelector('.chart-title');
+                if (titleEl) {
+                    titleEl.textContent = chart.title;
+                }
                 createChart(chart.id, chart.symbol)
                     .then(() => {
-                        chartsLoaded++;
-                        updateLoadingStatus(chartsLoaded, chartsFailed, charts.length);
+                        // ... existing code ...
                     })
                     .catch(() => {
-                        chartsFailed++;
-                        updateLoadingStatus(chartsLoaded, chartsFailed, charts.length);
+                        // ... existing code ...
                     });
             });
         }
