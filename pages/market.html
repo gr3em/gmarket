@@ -29,9 +29,18 @@
         <section id="indices" class="market-section">
             <h2>Indices</h2>
             <div class="chart-container">
-                <div class="chart" id="index-sp500"></div>
-                <div class="chart" id="index-nasdaq"></div>
-                <div class="chart" id="index-djia"></div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">S&P 500</h3>
+                    <div class="chart" id="index-sp500"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">NASDAQ 100</h3>
+                    <div class="chart" id="index-nasdaq"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">Dow Jones</h3>
+                    <div class="chart" id="index-djia"></div>
+                </div>
             </div>
         </section>
 
@@ -56,9 +65,18 @@
         <section id="etfs" class="market-section">
             <h2>ETFs</h2>
             <div class="chart-container">
-                <div class="chart" id="etf-spy"></div>
-                <div class="chart" id="etf-qqq"></div>
-                <div class="chart" id="etf-voo"></div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">SPY - SPDR S&P 500</h3>
+                    <div class="chart" id="etf-spy"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">QQQ - Invesco QQQ</h3>
+                    <div class="chart" id="etf-qqq"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">IWM - iShares Russell 2000</h3>
+                    <div class="chart" id="etf-iwm"></div>
+                </div>
             </div>
         </section>
 
@@ -74,8 +92,8 @@
                     <div class="chart" id="crypto-ethusd"></div>
                 </div>
                 <div class="chart-wrapper">
-                    <h3 class="chart-title">XRP/USD - Ripple</h3>
-                    <div class="chart" id="crypto-xrpusd"></div>
+                    <h3 class="chart-title">BNB/USD - Binance Coin</h3>
+                    <div class="chart" id="crypto-bnbusd"></div>
                 </div>
             </div>
         </section>
@@ -83,27 +101,54 @@
         <section id="forex" class="market-section">
             <h2>Forex</h2>
             <div class="chart-container">
-                <div class="chart" id="forex-eurusd"></div>
-                <div class="chart" id="forex-gbpusd"></div>
-                <div class="chart" id="forex-usdjpy"></div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">EUR/USD - Euro</h3>
+                    <div class="chart" id="forex-eurusd"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">GBP/USD - British Pound</h3>
+                    <div class="chart" id="forex-gbpusd"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">USD/JPY - Japanese Yen</h3>
+                    <div class="chart" id="forex-usdjpy"></div>
+                </div>
             </div>
         </section>
 
         <section id="futures" class="market-section">
             <h2>Futures</h2>
             <div class="chart-container">
-                <div class="chart" id="futures-cl1"></div>
-                <div class="chart" id="futures-gc1"></div>
-                <div class="chart" id="futures-zc1"></div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">ES - E-mini S&P 500</h3>
+                    <div class="chart" id="futures-es"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">NQ - E-mini NASDAQ</h3>
+                    <div class="chart" id="futures-nq"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">CL - Crude Oil</h3>
+                    <div class="chart" id="futures-cl"></div>
+                </div>
             </div>
         </section>
 
         <section id="bonds" class="market-section">
             <h2>Bonds</h2>
             <div class="chart-container">
-                <div class="chart" id="bond-us10y"></div>
-                <div class="chart" id="bond-de10y"></div>
-                <div class="chart" id="bond-gb10y"></div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">US10Y - US 10Y Treasury</h3>
+                    <div class="chart" id="bond-us10"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">US30Y - US 30Y Treasury</h3>
+                    <div class="chart" id="bond-us30"></div>
+                </div>
+                <div class="chart-wrapper">
+                    <h3 class="chart-title">DE10Y - German 10Y Bund</h3>
+                    <div class="chart" id="bond-de10"></div>
+                </div>
             </div>
         </section>
         <div id="loading-indicator" class="loading-container">
@@ -171,24 +216,40 @@
         }
 
         const charts = [
+            // Indices
             { id: "index-sp500", symbol: "SPX", title: "S&P 500" },
             { id: "index-nasdaq", symbol: "NASDAQ:NDX", title: "NASDAQ 100" },
-            { id: "index-djia", symbol: "DJIA", title: "Dow Jones Industrial Average" },
-            { id: "stock-aapl", symbol: "AAPL", title: "AAPL - Apple Inc." },
-            { id: "stock-googl", symbol: "GOOGL", title: "GOOGL - Alphabet Inc." },
-            { id: "stock-msft", symbol: "MSFT", title: "MSFT - Microsoft Corp." },
-            { id: "etf-spy", symbol: "SPY", title: "SPY - SPDR S&P 500 ETF" },
-            { id: "etf-qqq", symbol: "QQQ", title: "QQQ - Invesco QQQ Trust" },
-            { id: "etf-voo", symbol: "VOO", title: "VOO - Vanguard S&P 500 ETF" },
-            { id: "crypto-btcusd", symbol: "BINANCE:BTCUSDT", title: "BTC/USD - Bitcoin" },
-            { id: "crypto-ethusd", symbol: "BINANCE:ETHUSDT", title: "ETH/USD - Ethereum" },
-            { id: "crypto-xrpusd", symbol: "BINANCE:XRPUSDT", title: "XRP/USD - Ripple" },
-            { id: "forex-eurusd", symbol: "OANDA:EURUSD", title: "EUR/USD" },
-            { id: "forex-gbpusd", symbol: "OANDA:GBPUSD", title: "GBP/USD" },
-            { id: "forex-usdjpy", symbol: "OANDA:USDJPY", title: "USD/JPY" },
-            { id: "futures-cl1", symbol: "NYMEX:CL1!", title: "Crude Oil Futures" },
-            { id: "futures-gc1", symbol: "COMEX:GC1!", title: "Gold Futures" },
-            { id: "futures-zc1", symbol: "CBOT:ZC1!", title: "Corn Futures" }
+            { id: "index-djia", symbol: "DJIA", title: "Dow Jones" },
+
+            // Stocks
+            { id: "stock-aapl", symbol: "AAPL", title: "Apple Inc." },
+            { id: "stock-msft", symbol: "MSFT", title: "Microsoft" },
+            { id: "stock-googl", symbol: "GOOGL", title: "Alphabet" },
+
+            // ETFs
+            { id: "etf-spy", symbol: "SPY", title: "SPDR S&P 500" },
+            { id: "etf-qqq", symbol: "QQQ", title: "Invesco QQQ" },
+            { id: "etf-iwm", symbol: "IWM", title: "iShares Russell 2000" },
+
+            // Crypto
+            { id: "crypto-btcusd", symbol: "BINANCE:BTCUSDT", title: "Bitcoin" },
+            { id: "crypto-ethusd", symbol: "BINANCE:ETHUSDT", title: "Ethereum" },
+            { id: "crypto-bnbusd", symbol: "BINANCE:BNBUSDT", title: "Binance Coin" },
+
+            // Forex
+            { id: "forex-eurusd", symbol: "EURUSD", title: "EUR/USD" },
+            { id: "forex-gbpusd", symbol: "GBPUSD", title: "GBP/USD" },
+            { id: "forex-usdjpy", symbol: "USDJPY", title: "USD/JPY" },
+
+            // Futures
+            { id: "futures-es", symbol: "ES1!", title: "E-mini S&P 500" },
+            { id: "futures-nq", symbol: "NQ1!", title: "E-mini NASDAQ" },
+            { id: "futures-cl", symbol: "CL1!", title: "Crude Oil" },
+
+            // Bonds
+            { id: "bond-us10", symbol: "US10Y", title: "US 10Y Treasury" },
+            { id: "bond-us30", symbol: "US30Y", title: "US 30Y Treasury" },
+            { id: "bond-de10", symbol: "DE10Y", title: "German 10Y Bund" }
         ];
 
         function initCharts() {
