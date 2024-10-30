@@ -84,6 +84,16 @@ document.addEventListener('DOMContentLoaded', function() {
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
       
+      // Add form validation before submission
+      if (!name || !email || !message) {
+        alert('Please fill in all fields');
+        return;
+      }
+      if (!validate_email(email)) {
+        alert('Please enter a valid email address');
+        return;
+      }
+      
       try {
         // Send to Firebase
         const contactRef = ref(database, 'contacts');
@@ -118,16 +128,10 @@ function register() {
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
   const fullName = document.getElementById('fullName').value;
-  const favourite_song = document.getElementById('favourite_song').value;
-  const milk_before_cereal = document.getElementById('milk_before_cereal').value;
 
   // Validate input fields
   if (!validate_email(email) || !validate_password(password)) {
     alert('Email or Password is Outta Line!!');
-    return;
-  }
-  if (!validate_field(fullName) || !validate_field(favourite_song) || !validate_field(milk_before_cereal)) {
-    alert('One or More Extra Fields is Outta Line!!');
     return;
   }
 
@@ -142,8 +146,6 @@ function register() {
       const user_data = {
         email: email,
         full_name: fullName,
-        favourite_song: favourite_song,
-        milk_before_cereal: milk_before_cereal,
         last_login: Date.now()
       };
       return set(ref(database, 'users/' + user.uid), user_data);
