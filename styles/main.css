@@ -327,7 +327,7 @@ nav ul li a:hover, #logoutBtn:hover, .oauth-btn:hover, #toggle-signup:hover {
 }
 
 .logo {
-    max-width: 400px;
+    max-width: 450px;
     height: auto;
 }
 
@@ -338,7 +338,7 @@ header .logo-container {
 }
 
 header .logo {
-    max-width: 100px;
+    max-width: 450px;
 }
 
 /* Adjust the signup-container to accommodate the logo */
