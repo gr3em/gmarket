@@ -85,10 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const message = document.getElementById('message').value;
       
       try {
-        // Log to console for testing
-        console.log('Form submission:', { name, email, message });
-        
-        // You can send to Firebase here
+        // Send to Firebase
         const contactRef = ref(database, 'contacts');
         const newContactRef = push(contactRef);
         await set(newContactRef, {
@@ -99,12 +96,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         // Show success message
-        document.getElementById('success-message').style.display = 'block';
-        contactForm.reset();
+        const successMessage = document.getElementById('success-message');
+        successMessage.style.display = 'block';
+        contactForm.reset(); // Clear the form
         
         // Hide success message after 3 seconds
         setTimeout(() => {
-          document.getElementById('success-message').style.display = 'none';
+          successMessage.style.display = 'none';
         }, 3000);
 
       } catch (error) {

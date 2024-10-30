@@ -248,11 +248,14 @@ footer nav a:hover {
 
 /* Success message */
 #success-message {
-    background-color: #7216f4;
-    color: #FFFFFF;
-    padding: 10px;
+    background-color: rgba(114, 22, 244, 0.1);
+    color: #7216f4;
+    padding: 1rem;
     border-radius: 4px;
-    margin-top: 10px;
+    border: 1px solid #7216f4;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: bold;
 }
 
 /* Auth-dependent elements */
