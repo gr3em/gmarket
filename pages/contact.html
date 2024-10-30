@@ -56,7 +56,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
         import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-        import { getDatabase } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyCNrtV3TsMljkJHtst2aX87IeZOcQyNQ9A",
@@ -70,6 +70,46 @@
         };
         
         const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Contact form submission handler
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            try {
+                // Create a new reference in 'contacts' node
+                const contactsRef = ref(database, 'contacts');
+                const newContactRef = push(contactsRef);
+                
+                // Set the data
+                await set(newContactRef, {
+                    name: name,
+                    email: email,
+                    message: message,
+                    timestamp: new Date().toISOString()
+                });
+
+                // Show success message
+                const successMessage = document.getElementById('success-message');
+                successMessage.style.display = 'block';
+                
+                // Clear the form
+                document.getElementById('contact-form').reset();
+                
+                // Hide success message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Error sending message. Please try again.');
+            }
+        });
     </script>
     <script type="module" src="/scripts/main.js"></script>
     <script>
