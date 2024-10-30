@@ -74,18 +74,22 @@ p {
 }
 
 /* Form styles */
-form {
+.form-group {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 400px;
 }
 
-label {
+.form-group label {
     margin-bottom: 0.5rem;
     color: #FFFFFF;
+    text-align: left;
 }
 
-input, button, textarea {
-    margin-bottom: 1rem;
+.form-group input,
+.form-group textarea {
     padding: 0.5rem;
     border: 1px solid #7216f4;
     border-radius: 4px;
@@ -93,19 +97,32 @@ input, button, textarea {
     color: #FFFFFF;
 }
 
-textarea {
+.form-group textarea {
     min-height: 100px;
+    resize: vertical;
 }
 
-button {
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#sendBtn {
+    width: 100%;
+    padding: 0.75rem;
     background-color: #7216f4;
-    color: #FFFFFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
     font-weight: bold;
 }
 
-button:hover {
+#sendBtn:hover {
     background-color: #5a11c3;
 }
 
