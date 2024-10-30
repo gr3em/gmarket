@@ -84,15 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
       
-      // Add form validation before submission
-      if (!name || !email || !message) {
-        alert('Please fill in all fields');
-        return;
-      }
-      if (!validate_email(email)) {
-        alert('Please enter a valid email address');
-        return;
-      }
+      console.log('Form submitted:', { name, email, message });
       
       try {
         // Send to Firebase
