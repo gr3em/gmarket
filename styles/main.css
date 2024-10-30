@@ -471,13 +471,13 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
     .chart-container {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
     .chart-container {
         grid-template-columns: 1fr;
     }
