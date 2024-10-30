@@ -2,8 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-import { getDatabase, ref, set, update } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
-
+import { getDatabase, ref, set, update, push } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCNrtV3TsMljkJHtst2aX87IeZOcQyNQ9A",
@@ -72,6 +71,46 @@ document.addEventListener('DOMContentLoaded', function() {
     googleSignInBtn.addEventListener('click', function(e) {
       e.preventDefault();
       googleSignIn();
+    });
+  }
+
+  // Contact form handler
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      try {
+        // Log to console for testing
+        console.log('Form submission:', { name, email, message });
+        
+        // You can send to Firebase here
+        const contactRef = ref(database, 'contacts');
+        const newContactRef = push(contactRef);
+        await set(newContactRef, {
+          name,
+          email,
+          message,
+          timestamp: Date.now()
+        });
+
+        // Show success message
+        document.getElementById('success-message').style.display = 'block';
+        contactForm.reset();
+        
+        // Hide success message after 3 seconds
+        setTimeout(() => {
+          document.getElementById('success-message').style.display = 'none';
+        }, 3000);
+
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Error sending message. Please try again.');
+      }
     });
   }
 });
@@ -177,3 +216,4 @@ function validate_password(password) {
 function validate_field(field) {
   return field != null && field.length > 0;
 }
+
